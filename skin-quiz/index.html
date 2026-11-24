@@ -17,6 +17,7 @@ body{
   background:linear-gradient(160deg,var(--bg1),var(--bg2));
   background-attachment:fixed;
   min-height:100dvh;
+  position:relative;
   display:flex;flex-direction:column;align-items:center;
   padding:max(14px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom));
   overflow-wrap:anywhere;word-break:keep-all;
@@ -40,6 +41,20 @@ p.lead{color:var(--sub);line-height:1.6;font-size:15px}
 .opt:active,.opt:hover{border-color:var(--accent);background:#f3f8fe}
 .note{font-size:12px;color:var(--sub);text-align:center;margin-top:12px;line-height:1.5}
 
+.snow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,#fff 0 2px,transparent 3px),radial-gradient(circle,#fff 0 1.5px,transparent 2.5px),radial-gradient(circle,#fff 0 3px,transparent 4px);
+  background-size:130px 150px,90px 110px,210px 190px;background-position:10px 20px,50px 70px,100px 40px;opacity:.7}
+.top,main{position:relative;z-index:1}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.hero{display:flex;justify-content:center}
+.hero .face{width:128px;filter:drop-shadow(0 8px 14px rgba(190,120,110,.28))}
+.face svg,.sw svg{display:block;width:100%;height:auto}
+.sw{flex:none;width:54px;height:54px;border-radius:50%;overflow:hidden;background:#f1cdbd;border:2px solid #fff;box-shadow:0 2px 8px rgba(120,100,140,.18)}
+.sw svg{height:100%}
+.opt{display:flex;align-items:center;gap:12px}
+.opt .tx{min-width:0;flex:1}
+@media (max-width:340px){.sw{width:44px;height:44px}.opt{gap:10px;padding:12px}}
+
 /* result: 9:16 story card */
 .stage{display:flex;flex-direction:column;align-items:center;gap:12px}
 .story{
@@ -53,20 +68,38 @@ p.lead{color:var(--sub);line-height:1.6;font-size:15px}
   container-type:inline-size;
   color:#2b3a52;
 }
-.story .small{font-size:3.6cqw;letter-spacing:.08em;opacity:.75}
-.story .big-flake{font-size:14cqw;margin-top:8cqw}
-.story .type{font-size:13cqw;font-weight:800;line-height:1.1;margin-top:2cqw}
-.story .tag{font-size:4.6cqw;margin-top:3cqw;opacity:.85;line-height:1.4}
-.story ul{list-style:none;margin-top:9cqw;display:flex;flex-direction:column;gap:4cqw}
-.story li{background:rgba(255,255,255,.62);border-radius:4cqw;padding:4.4cqw 4.6cqw;font-size:4.7cqw;line-height:1.5}
-.story .foot{margin-top:auto;text-align:center;font-size:4.3cqw;line-height:1.5;font-weight:600}
+.story .small{font-size:3.6cqw;letter-spacing:.08em;opacity:.75;text-align:center}
+.story .head{text-align:center}
+.story .face{width:44cqw;margin:2cqw auto 0;filter:drop-shadow(0 1.6cqw 3cqw rgba(190,110,110,.3))}
+.story .face-wrap{position:relative}
+.story .face-wrap::before,.story .face-wrap::after{content:var(--sym);position:absolute;font-size:6cqw}
+.story .face-wrap::before{left:12cqw;top:6cqw}.story .face-wrap::after{right:11cqw;top:26cqw;font-size:4.6cqw}
+.story .type{font-size:11.5cqw;font-weight:800;line-height:1.1;margin-top:3cqw;text-align:center}
+.story .tag{font-size:4.2cqw;margin-top:1.8cqw;opacity:.85;line-height:1.4;text-align:center}
+.story ul{list-style:none;margin-top:5cqw;display:flex;flex-direction:column;gap:2.8cqw}
+.story li{background:rgba(255,255,255,.62);border-radius:4cqw;padding:3.2cqw 4cqw;font-size:4.2cqw;line-height:1.45}
+.story .foot{margin-top:auto;padding-top:2cqw;text-align:center;font-size:4.1cqw;line-height:1.5;font-weight:600}
 .story .disc{margin-top:2.5cqw;text-align:center;font-size:3.1cqw;opacity:.7}
 .hint{font-size:13px;color:var(--sub);text-align:center}
 .row{display:flex;gap:10px;width:var(--w,100%);max-width:420px}
 .hidden{display:none!important}
+.seasons{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sbtn{border:1.5px solid #fff;border-radius:20px;padding:18px 10px;background:linear-gradient(160deg,var(--s1),var(--s2));color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(80,110,160,.12);min-height:130px;justify-content:center}
+.sbtn:active,.sbtn:hover{transform:translateY(-1px);border-color:var(--accent)}
+.sbtn .ss{font-size:34px;line-height:1}.sbtn .sn{font-size:18px;font-weight:700}.sbtn .sh{font-size:12px;color:var(--sub);line-height:1.4;text-align:center}
+body[data-season=spring]{--accent:#e58fae}body[data-season=summer]{--accent:#4fa8d6}body[data-season=autumn]{--accent:#d98c4f}body[data-season=winter]{--accent:#7ea6d6}
+.row .btn{padding:14px}
 </style>
 </head>
 <body>
+<div class="snow" aria-hidden="true"></div>
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+  <radialGradient id="skinBase" cx="50%" cy="40%" r="72%"><stop offset="0" stop-color="#fdebe1"/><stop offset=".55" stop-color="#f7d6c8"/><stop offset="1" stop-color="#ecbaa8"/></radialGradient>
+  <radialGradient id="blush"><stop offset="0" stop-color="#e45a68" stop-opacity=".7"/><stop offset=".6" stop-color="#e9707a" stop-opacity=".3"/><stop offset="1" stop-color="#e9707a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="shine"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".55" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .62  0 0 0 0 .38  0 0 0 0 .32  0 0 0 1.4 -.5"/></filter>
+  <clipPath id="faceClip"><ellipse cx="100" cy="125" rx="80" ry="105"/></clipPath>
+</defs></svg>
 <div class="top">
   <span class="brand">❄ SKIN TYPE QUIZ</span>
   <button class="lang" id="lang" type="button" aria-label="Change language">English</button>
@@ -74,14 +107,14 @@ p.lead{color:var(--sub);line-height:1.6;font-size:15px}
 <main id="app"></main>
 
 <script>
-const ACCOUNT = "@yourbeauty"; // ← 뷰티 계정 이름이 정해지면 여기 한 줄만 바꾸세요
+const ACCOUNT = "@yourbeauty"; // ← 인스타그램 예비 주소. 정해지면 여기 한 줄만 바꾸세요
 
 const T = {
   ko:{
     brand:"피부타입 진단",
-    title:"나는 어떤 피부타입일까?", lead:"6문제, 1분이면 끝나요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
-    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", hint:"화면을 캡처해서 스토리에 올려 보세요",
-    foot:`${ACCOUNT}\n곧 오픈 · 팔로우하고 루틴 더 보기`,
+    title:"나는 어떤 피부타입일까?", lead:"계절마다 피부는 달라져요.\n계절을 고르고 6문제로 확인해 보세요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
+    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", other:"다른 계절로", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
+    foot:`${ACCOUNT}\n팔로우하고 더 많은 정보를 알아가세요`,
     disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"의학적 진단이 아닙니다.", switchTo:"English",
     types:{
       dry:{name:"건성", tag:"촉촉함이 가장 필요한 타입", tips:["세안 후 1분 안에 보습제를 발라 수분을 가둬 주세요.","세안은 미온수로, 너무 자주 하지 않기.","겨울엔 크림을 한 겹 더, 실내 습도 40~60% 유지."]},
@@ -94,15 +127,15 @@ const T = {
       {t:"오후 3시, 거울 속 내 얼굴은?",o:[["이마·코는 번들, 볼은 건조해요","combo"],["전체적으로 번들거려요","oily"],["각질이 일어나 보여요","dry"],["얼굴이 붉게 달아올라 있어요","sensitive"]]},
       {t:"새 스킨케어 제품을 쓰면 보통?",o:[["빨리 흡수되고 더 달라고 해요","dry"],["금방 번들거려요","oily"],["따갑거나 붉어지기 쉬워요","sensitive"],["이마는 괜찮은데 볼이 당겨요","combo"]]},
       {t:"내 모공은?",o:[["코·볼 주변만 눈에 띄어요","combo"],["거의 안 보여요","dry"],["전체적으로 넓은 편이에요","oily"],["모공보다 붉은기가 더 신경 쓰여요","sensitive"]]},
-      {t:"겨울 바람과 난방, 내 피부는?",o:[["붉어지고 따가워요","sensitive"],["각질이 일어나고 건조해요","dry"],["볼은 건조한데 T존은 그대로예요","combo"],["별 변화 없고 오히려 번들거려요","oily"]]},
+      {t:"{s} 날씨에 내 피부는?",o:[["붉어지고 따가워요","sensitive"],["각질이 일어나고 건조해요","dry"],["볼은 건조한데 T존은 그대로예요","combo"],["별 변화 없고 오히려 번들거려요","oily"]]},
       {t:"선크림·베이스를 바르고 한낮이 되면?",o:[["T존만 무너져요","combo"],["가려움이나 화끈거림이 있어요","sensitive"],["들뜨고 갈라져요","dry"],["전체가 흘러내려요","oily"]]}
     ]
   },
   en:{
     brand:"Skin Type Quiz",
-    title:"What's your skin type?", lead:"6 questions, about a minute.\nShare your result card right to your story.",
-    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", hint:"Screenshot this card and post it to your story",
-    foot:`${ACCOUNT}\nOpening soon · Follow for more routines`,
+    title:"What's your skin type?", lead:"Skin changes with the seasons.\nPick a season and answer 6 questions.\nShare your result card right to your story.",
+    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", other:"Other season", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
+    foot:`${ACCOUNT}\nFollow to discover more skin tips`,
     disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Not a medical diagnosis.", switchTo:"한국어",
     types:{
       dry:{name:"Dry", tag:"Moisture is your best friend", tips:["Apply moisturizer within a minute of cleansing to lock in water.","Wash with lukewarm water and don't over-cleanse.","Add an extra layer of cream in winter; keep indoor humidity at 40–60%."]},
@@ -115,15 +148,67 @@ const T = {
       {t:"At 3 p.m., your face in the mirror looks…",o:[["Shiny T-zone, dry cheeks","combo"],["Shiny all over","oily"],["Flaky in places","dry"],["Flushed and warm","sensitive"]]},
       {t:"When you try a new skincare product, usually…",o:[["It soaks in fast and I want more","dry"],["I get shiny quickly","oily"],["It stings or turns me red easily","sensitive"],["Forehead is fine but cheeks feel tight","combo"]]},
       {t:"Your pores are…",o:[["Visible only around nose and cheeks","combo"],["Barely visible","dry"],["Large overall","oily"],["Redness bothers me more than pores","sensitive"]]},
-      {t:"Winter wind and heating make your skin…",o:[["Red and stingy","sensitive"],["Flaky and dry","dry"],["Dry cheeks, same T-zone","combo"],["No change, or even shinier","oily"]]},
+      {t:"In {s} weather, your skin…",o:[["Red and stingy","sensitive"],["Flaky and dry","dry"],["Dry cheeks, same T-zone","combo"],["No change, or even shinier","oily"]]},
       {t:"By midday after sunscreen or base makeup…",o:[["Only the T-zone breaks down","combo"],["Itchy or burning","sensitive"],["Patchy and cracked","dry"],["Everything slides off","oily"]]}
     ]
   }
 };
+
+const SEASONS={
+  spring:{sym:"🌸",ko:"봄",en:"spring",EN:"Spring",hk:"환절기 · 꽃가루",he:"Seasonal change · pollen",c:["#fde4ec","#e4f3dd"],a:"#e58fae"},
+  summer:{sym:"☀️",ko:"여름",en:"summer",EN:"Summer",hk:"땀 · 자외선 · 에어컨",he:"Sweat · UV · AC",c:["#d8f0fb","#e0f5ee"],a:"#4fa8d6"},
+  autumn:{sym:"🍂",ko:"가을",en:"autumn",EN:"Autumn",hk:"건조 시작 · 일교차",he:"Dryness starts · big swings",c:["#fde6d0","#f3e0c6"],a:"#d98c4f"},
+  winter:{sym:"❄️",ko:"겨울",en:"winter",EN:"Winter",hk:"찬바람 · 난방",he:"Cold wind · heating",c:["#dcebfa","#ece6f7"],a:"#7ea6d6"}
+};
+const ST={
+ ko:{
+  spring:{dry:["환절기엔 순한 보습 크림으로 장벽부터 챙기세요.","꽃가루 날리는 날엔 세안 후 바로 보습하기."],oily:["수분 젤 크림으로 가볍게, 유분 제품은 줄이기.","자외선이 늘어나니 산뜻한 선크림 챙기기."],combo:["T존은 산뜻하게, 볼은 보습 한 겹 더.","꽃가루·미세먼지 날엔 저녁 세안을 꼼꼼히."],sensitive:["꽃가루·일교차에 예민하니 새 제품은 잠시 쉬기.","진정 위주 루틴, 외출 후엔 미온수로 헹구기."]},
+  summer:{dry:["에어컨 바람에 건조해져요. 미스트보다 보습 크림.","땀 흘린 뒤엔 가볍게 씻고 바로 수분 채우기."],oily:["땀·피지가 늘어요. 젤 타입으로 가볍게 보습.","산뜻한 선크림을 낮 동안 덧바르기."],combo:["T존은 흡수 빠른 젤, 볼은 수분 크림 얇게.","땀 많은 날엔 클렌징을 꼼꼼히 하기."],sensitive:["땀과 자외선에 붉어지기 쉬워요. 순한 선크림 위주로.","열감이 있으면 차가운 수건으로 진정시키기."]},
+  autumn:{dry:["건조가 시작돼요. 크림을 한 단계 더 진하게.","각질은 문지르지 말고 순한 제품으로만 관리."],oily:["유분이 줄어도 보습은 유지하기.","여름 자외선 자국이 남으니 선크림은 계속."],combo:["볼 건조가 늘어요. 볼만 크림을 한 겹 더.","T존은 가벼운 로션으로 그대로 두기."],sensitive:["건조해지며 따가워져요. 보습 위주 단순 루틴.","일교차 큰 날엔 목도리·마스크로 자극 줄이기."]},
+  winter:{dry:["히터에 더 건조해요. 크림 한 겹 더, 가습기 켜기.","샤워는 미온수로 짧게, 바로 보습하기."],oily:["유분은 줄어도 속건조가 생겨요. 수분 먼저.","난방 심한 실내에선 가벼운 미스트·젤로 보습."],combo:["볼은 크림을 두껍게, T존은 얇게 바르기.","난방 실내에선 수분 충전을 자주 하기."],sensitive:["찬바람과 히터에 붉어져요. 장벽 크림으로 감싸기.","뜨거운 물 세안은 피하고 마스크·목도리로 보호."]}
+ },
+ en:{
+  spring:{dry:["Seasonal change dries skin out: rebuild the barrier first.","On high-pollen days, moisturize right after cleansing."],oily:["Switch to a light water-gel cream; skip heavy oils.","UV rises, so keep a fresh, light sunscreen handy."],combo:["Keep the T-zone fresh; give cheeks extra care.","After pollen or dust, cleanse well at night."],sensitive:["Pollen and temperature swings irritate: pause new products.","Keep it soothing; rinse with lukewarm water after going out."]},
+  summer:{dry:["AC dries skin out: use a cream, not just mist.","After sweating, rinse lightly and rehydrate right away."],oily:["Sweat and oil rise: use a gel moisturizer.","Reapply a light, fresh sunscreen through the day."],combo:["Fast-absorbing gel on the T-zone, thin cream on cheeks.","On sweaty days, cleanse thoroughly."],sensitive:["Sweat and sun redden easily: choose a gentle sunscreen.","If skin feels hot, soothe it with a cool towel."]},
+  autumn:{dry:["Dryness begins: switch to a slightly richer cream.","Don't scrub flakes; use gentle products only."],oily:["Oil may drop, but keep moisturizing.","Summer sun marks linger, so keep up the sunscreen."],combo:["Cheeks dry out more: add a layer of cream there only.","Leave the T-zone with a light lotion."],sensitive:["Dryness can sting: keep a simple, moisture-first routine.","On big temperature swings, cover up with a scarf or mask."]},
+  winter:{dry:["Heaters dry you out more: add a cream layer and a humidifier.","Short lukewarm showers, then moisturize right away."],oily:["Oil drops but inner dryness appears: hydrate first.","In heated rooms, top up with light gel or mist."],combo:["Thick cream on cheeks, a thin layer on the T-zone.","Top up hydration often in heated rooms."],sensitive:["Cold wind and heaters redden you: seal with barrier cream.","Skip hot-water washing; protect with a scarf or mask."]}
+ }
+};
+let season=null;
 const PALETTE = {
   dry:["#dcebfa","#f3e6f2"], oily:["#d9f0ef","#e8f2fb"],
   combo:["#e4e6fa","#f6e9ef"], sensitive:["#fbe4ea","#e9eefb"]
 };
+
+
+/* ---- skin illustration (SVG). type: dry | oily | combo | sensitive | base ---- */
+function rnd(seed){let a=seed;return()=>{a=(a*1664525+1013904223)%4294967296;return a/4294967296}}
+const FLAKES=[[52,140,9,-20],[70,166,7,30],[48,172,6,10],[142,150,9,25],[152,170,7,-15],[128,168,6,40],[75,62,7,5],[124,58,6,-30],[100,50,5,0],[60,116,5,15],[146,122,5,-10],[100,192,6,20]];
+const CHEEK_FLAKES=[[52,140,9,-20],[70,166,7,30],[48,172,6,10],[142,150,9,25],[152,170,7,-15],[128,168,6,40]];
+const flake=(x,y,sz,r)=>`<g transform="translate(${x} ${y}) rotate(${r}) scale(${sz})"><path d="M-1,0 L-.25,-.75 L1,-.3 L.75,.65 L-.5,.85Z" fill="#fff" fill-opacity=".78" stroke="#e3b9aa" stroke-width=".12"/></g>`;
+const crack=d=>`<path d="${d}" fill="none" stroke="#d29c8b" stroke-opacity=".55" stroke-width=".9" stroke-linecap="round"/>`;
+const shine=(x,y,rx,ry)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="url(#shine)"/>`;
+function pores(seed,n,x0,x1,y0,y1,col){const r=rnd(seed);let o='';for(let i=0;i<n;i++){o+=`<circle cx="${(x0+r()*(x1-x0)).toFixed(1)}" cy="${(y0+r()*(y1-y0)).toFixed(1)}" r="${(.9+r()*.8).toFixed(1)}" fill="${col||'#d99b8a'}" fill-opacity=".5"/>`}return o}
+function drops(){return [[88,72,2.2],[112,66,1.8],[100,104,2],[96,136,1.7],[60,146,2],[142,152,1.8],[104,196,1.8]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" fill-opacity=".85" stroke="#fff" stroke-opacity=".9" stroke-width=".4"/><circle cx="${x-r*.3}" cy="${y-r*.3}" r="${r*.35}" fill="#fff"/>`).join('')}
+function fx(type){
+  switch(type){
+    case 'dry': return `<rect width="200" height="250" fill="#f3dccf" fill-opacity=".38"/>`+crack('M36 148 q9 -5 15 2 t15 -2 t14 3')+crack('M128 162 q9 4 15 -2 t16 3')+crack('M78 72 q7 -4 13 1 t12 -1')+crack('M60 190 q8 -3 14 2')+FLAKES.map(f=>flake(...f)).join('');
+    case 'oily': return shine(100,62,38,12)+shine(100,120,11,36)+shine(100,208,26,8)+shine(54,152,19,11)+shine(146,152,19,11)+pores(7,34,38,162,92,200)+drops();
+    case 'combo': return shine(100,62,38,12)+shine(100,120,11,36)+pores(11,16,86,114,95,170)+crack('M40 150 q9 -5 15 2 t15 -2')+crack('M130 160 q9 4 15 -2 t14 3')+CHEEK_FLAKES.map(f=>flake(...f)).join('');
+    case 'sensitive': return `<ellipse cx="54" cy="150" rx="38" ry="32" fill="url(#blush)"/><ellipse cx="146" cy="150" rx="38" ry="32" fill="url(#blush)"/><ellipse cx="100" cy="152" rx="15" ry="11" fill="url(#blush)" fill-opacity=".7"/><ellipse cx="100" cy="72" rx="46" ry="16" fill="url(#blush)" fill-opacity=".35"/>`+
+      ['M38 140 q6 -7 12 0 t10 5','M42 158 q8 3 13 -5 t9 2','M162 140 q-6 -7 -12 0 t-10 5','M158 158 q-8 3 -13 -5 t-9 2','M92 148 q4 -4 8 0 t8 2'].map(d=>`<path d="${d}" fill="none" stroke="#d6414f" stroke-opacity=".45" stroke-width=".8" stroke-linecap="round"/>`).join('')+pores(5,14,36,164,125,175,'#d6414f');
+    default: return '';
+  }
+}
+const CROP={dry:"18 112 84 84",oily:"60 78 80 80",combo:"56 92 88 88",sensitive:"18 112 84 84"};
+function skin(type,swatch){
+  const vb=swatch&&CROP[type]?CROP[type]:"0 0 200 250";
+  return `<svg viewBox="${vb}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <ellipse cx="100" cy="125" rx="80" ry="105" fill="url(#skinBase)"/>
+    <g clip-path="url(#faceClip)"><rect width="200" height="250" filter="url(#grain)" opacity="${type==='oily'?.14:.34}"/>${fx(type)}</g>
+    <ellipse cx="100" cy="125" rx="80" ry="105" fill="none" stroke="#d9a493" stroke-opacity=".45" stroke-width="1.2"/>
+  </svg>`;
+}
 
 let lang = (navigator.language||"").toLowerCase().startsWith("ko") ? "ko" : "en";
 let idx = -1, picks = [];
@@ -138,27 +223,36 @@ function render(){
   document.documentElement.lang = lang;
   langBtn.textContent = t.switchTo;
   document.title = lang==="ko" ? "피부타입 진단 퀴즈" : "Skin Type Quiz";
+  if(idx===-2) return renderSeason(t);
   if(idx<0) return renderIntro(t);
   if(idx>=t.q.length) return renderResult(t);
   renderQ(t);
 }
 function renderIntro(t){
   app.innerHTML = `<section class="panel">
-    <div class="flake">❄</div>
+    <div class="hero"><div class="face">${skin('base')}</div></div>
     <h1>${esc(t.title)}</h1>
     <p class="lead">${nl(t.lead)}</p>
     <button class="btn" id="go" type="button">${esc(t.start)}</button>
     <p class="note" style="margin-top:0">${esc(t.note)}</p>
   </section>`;
-  document.getElementById("go").onclick=()=>{idx=0;picks=[];render()};
+  document.getElementById("go").onclick=()=>{idx=-2;picks=[];render()};
+}
+function renderSeason(t){
+  app.innerHTML = `<section class="panel">
+    <h2>${esc(t.seasonQ)}</h2>
+    <div class="seasons">${Object.keys(SEASONS).map(k=>{const S=SEASONS[k];return `<button class="sbtn" type="button" data-s="${k}" style="--s1:${S.c[0]};--s2:${S.c[1]}"><span class="ss">${S.sym}</span><span class="sn">${esc(lang==="ko"?S.ko:S.EN)}</span><span class="sh">${esc(lang==="ko"?S.hk:S.he)}</span></button>`}).join("")}</div>
+    <p class="note" style="margin-top:0">${esc(t.note)}</p>
+  </section>`;
+  app.querySelectorAll(".sbtn").forEach(b=>b.onclick=()=>{season=b.dataset.s;document.body.dataset.season=season;idx=0;picks=[];render();window.scrollTo(0,0)});
 }
 function renderQ(t){
   const q=t.q[idx], total=t.q.length;
   app.innerHTML = `<section class="panel">
     <div><div class="count">${t.of(idx+1,total)}</div>
     <div class="progress" style="margin-top:8px"><i style="width:${(idx/total)*100}%"></i></div></div>
-    <h2>${esc(q.t)}</h2>
-    <div class="opts">${q.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}">${esc(o[0])}</button>`).join("")}</div>
+    <h2>${esc(q.t.replace('{s}',lang==='ko'?SEASONS[season].ko:SEASONS[season].en))}</h2>
+    <div class="opts">${q.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}"><span class="sw">${skin(o[1],true)}</span><span class="tx">${esc(o[0])}</span></button>`).join("")}</div>
     <p class="note" style="margin-top:0">${esc(t.note)}</p>
   </section>`;
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
@@ -174,21 +268,22 @@ function result(){
   for(let i=picks.length-1;i>=0;i--) if(score[picks[i]]===max) return picks[i];
 }
 function renderResult(t){
-  const k=result(), ty=t.types[k], [c1,c2]=PALETTE[k];
+  const k=result(), ty=t.types[k], S=SEASONS[season], [c1,c2]=S.c, tips=[ty.tips[0],...ST[lang][season][k]];
   app.innerHTML = `<section class="stage">
-    <div class="story" style="--c1:${c1};--c2:${c2}" id="card">
-      <div class="small">${esc(t.small)}</div>
-      <div class="big-flake">❄</div>
+    <div class="story" style="--c1:${c1};--c2:${c2};--sym:'${S.sym}'" id="card">
+      <div class="small">${esc(t.small)} · ${esc(lang==='ko'?S.ko:S.EN)}</div>
+      <div class="face-wrap"><div class="face">${skin(k)}</div></div>
       <div class="type">${esc(ty.name)}</div>
       <div class="tag">${esc(ty.tag)}</div>
-      <ul>${ty.tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+      <ul>${tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
       <div class="foot">${nl(t.foot)}</div>
       <div class="disc">${esc(t.disc)}</div>
     </div>
     <p class="hint">${esc(t.hint)}</p>
-    <div class="row"><button class="btn ghost" id="again" type="button">${esc(t.again)}</button></div>
+    <div class="row"><button class="btn ghost" id="again" type="button">${esc(t.again)}</button><button class="btn ghost" id="other" type="button">${esc(t.other)}</button></div>
   </section>`;
-  document.getElementById("again").onclick=()=>{idx=-1;picks=[];render();window.scrollTo(0,0)};
+  document.getElementById("again").onclick=()=>{idx=0;picks=[];render();window.scrollTo(0,0)};
+  document.getElementById("other").onclick=()=>{idx=-2;picks=[];render();window.scrollTo(0,0)};
 }
 langBtn.onclick=()=>{lang=lang==="ko"?"en":"ko";render()};
 render();
