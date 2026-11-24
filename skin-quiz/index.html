@@ -129,6 +129,27 @@ body[data-season=spring]{--accent:#e58fae}body[data-season=summer]{--accent:#4fa
 .rec ul{list-style:none;display:flex;flex-direction:column;gap:10px}
 .rec li b{display:block;font-size:14px}.rec li span{display:block;font-size:13px;color:var(--sub);margin-top:2px;line-height:1.45}
 .rec p{font-size:11.5px;color:var(--sub);margin-top:12px;line-height:1.55}
+
+.friendb{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#fde4ec,#e3eefb);border-radius:18px;padding:12px 14px;font-size:14px;line-height:1.45}
+.fb-face{flex:none;width:52px;height:52px;border-radius:50%;overflow:hidden;background:#f1cdbd;border:2px solid #fff}.fb-face svg{display:block;width:100%;height:100%}
+.pic{flex:none;width:44px;height:44px;display:block}.pic svg{display:block;width:100%;height:100%}
+.rec li{display:flex;gap:12px;align-items:flex-start}
+.rec li em{display:block;font-style:normal;font-size:12.5px;color:#c0566f;margin-top:4px;line-height:1.45}
+.toast{width:var(--w,100%);max-width:420px;text-align:center;background:#2f3e56;color:#fff;border-radius:12px;padding:10px 12px;font-size:13px}
+.story .mrow{display:flex;align-items:flex-start;justify-content:center;gap:2cqw;margin-top:3cqw}
+.story .mcol{width:36cqw;text-align:center}
+.story .mface{width:28cqw;margin:0 auto;animation:pop .8s cubic-bezier(.2,.9,.3,1.2) .05s both;filter:drop-shadow(0 1.6cqw 3cqw rgba(190,110,110,.3))}
+.story .mface svg{display:block;width:100%;height:auto}
+.story .mn{font-size:4.2cqw;font-weight:800;line-height:1.3;margin-top:2cqw}
+.story .mheart{font-size:9cqw;color:#e0526f;margin-top:10cqw;animation:beat 1.4s ease-in-out infinite}
+.story .mpct{text-align:center;font-size:17cqw;font-weight:800;line-height:1;margin-top:5cqw;color:#d6456a;animation:up .6s ease-out .5s both}
+.story .mline{text-align:center;font-size:4.4cqw;line-height:1.45;margin-top:2cqw;font-weight:600;animation:up .5s ease-out .7s both}
+.story .mtitle{text-align:center;font-size:3.8cqw;opacity:.75;margin-top:6cqw;letter-spacing:.04em}
+.story .mprods{display:flex;flex-direction:column;gap:2.4cqw;margin-top:2.4cqw}
+.story .mp{display:flex;align-items:center;gap:3cqw;background:rgba(255,255,255,.65);border-radius:4cqw;padding:2.2cqw 3.4cqw;font-size:3.9cqw;font-weight:600;line-height:1.35}
+.story .mp .pic{width:10cqw;height:10cqw}
+.story .mface .fk,.story .mface .sh,.story .mface .bl{transform-box:fill-box;transform-origin:center}
+.story .mface .fk{animation:drift 2.4s ease-in-out infinite alternate}.story .mface .sh{animation:glint 1.9s ease-in-out infinite alternate}.story .mface .bl{animation:beat 2.2s ease-in-out infinite}
 </style>
 </head>
 <body>
@@ -153,7 +174,7 @@ const T = {
   ko:{
     brand:"피부타입 진단",
     title:"내 피부는 무슨 타입일까?", lead:"계절마다 피부는 달라져요.\n계절을 고르고 6문제로 확인해 보세요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
-    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", recTitle:n=>`${n}에게 많이 추천되는 제품`, recNote:"광고·제휴 아님. 2026년 뷰티 매체와 리뷰 기사에서 자주 추천된 제품이며, 직접 써 본 후기는 아닙니다. 피부에 따라 다르니 팔 안쪽에 먼저 테스트하세요.", prev:"← 이전", toStart:"← 처음으로", other:"다른 계절로", passBtn:"내 피부 계절 도감", passTitle:"나의 피부 계절 도감", passDone:"피부 계절 도감 완성", passSmall:"피부 계절 도감", passLeft:"아직 못 모은 계절이 있어요", back:"돌아가기", reset:"도감 지우기", empty:"아직 비어 있어요", stamped:"도감에 등록됨", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
+    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", shareBtn:"💌 친구에게 궁합 링크 보내기", compBtn:"💞 친구와 궁합 보기", copied:"링크를 복사했어요! 친구에게 붙여넣기 하세요", shareText:n=>`내 피부는 "${n} 타입"! 너랑 나는 피부 궁합이 어떨까?`, friendIs:n=>`친구는 "${n}"이에요`, friendAsk:"나는 어떤 타입일까요? 궁합을 확인해 보세요", matchSmall:"SKIN MATCH · 재미용 궁합", comboTitle:"같이 쓰면 좋은 조합", matchLabel:"단짝 궁합", illus:"그림은 직접 그린 일러스트이며 실제 제품 모양과 다릅니다.", recTitle:n=>`${n}에게 많이 추천되는 제품`, recNote:"광고·제휴 아님. 2026년 뷰티 매체와 리뷰 기사에서 자주 추천된 제품이며, 직접 써 본 후기는 아닙니다. 피부에 따라 다르니 팔 안쪽에 먼저 테스트하세요.", prev:"← 이전", toStart:"← 처음으로", other:"다른 계절로", passBtn:"내 피부 계절 도감", passTitle:"나의 피부 계절 도감", passDone:"피부 계절 도감 완성", passSmall:"피부 계절 도감", passLeft:"아직 못 모은 계절이 있어요", back:"돌아가기", reset:"도감 지우기", empty:"아직 비어 있어요", stamped:"도감에 등록됨", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
     foot:`${ACCOUNT}\n팔로우하고 더 많은 정보를 알아가세요`,
     disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"의학적 진단이 아닙니다.", switchTo:"English",
     types:{
@@ -174,7 +195,7 @@ const T = {
   en:{
     brand:"Skin Type Quiz",
     title:"What's your skin type?", lead:"Skin changes with the seasons.\nPick a season and answer 6 questions.\nShare your result card right to your story.",
-    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", recTitle:n=>`Often recommended for ${n.toLowerCase()} skin`, recNote:"Not an ad or affiliate. These are products often recommended in 2026 beauty media and review articles, not personal reviews. Skin varies, so patch-test on your inner arm first.", prev:"← Back", toStart:"← Start over", other:"Other season", passBtn:"My skin collection", passTitle:"My Skin Season Collection", passDone:"Season Collection complete", passSmall:"SEASON COLLECTION", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear collection", empty:"Still empty", stamped:"Added to collection", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
+    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", shareBtn:"💌 Send a match link to a friend", compBtn:"💞 Match with my friend", copied:"Link copied! Paste it to your friend", shareText:n=>`My skin is "${n} Type"! How well do we match?`, friendIs:n=>`Your friend is "${n}"`, friendAsk:"What type are you? Find your match", matchSmall:"SKIN MATCH · just for fun", comboTitle:"Good together", matchLabel:"Best match", illus:"Illustrations are hand-drawn and don't match real packaging.", recTitle:n=>`Often recommended for ${n.toLowerCase()} skin`, recNote:"Not an ad or affiliate. These are products often recommended in 2026 beauty media and review articles, not personal reviews. Skin varies, so patch-test on your inner arm first.", prev:"← Back", toStart:"← Start over", other:"Other season", passBtn:"My skin collection", passTitle:"My Skin Season Collection", passDone:"Season Collection complete", passSmall:"SEASON COLLECTION", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear collection", empty:"Still empty", stamped:"Added to collection", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
     foot:`${ACCOUNT}\nFollow to discover more skin tips`,
     disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Not a medical diagnosis.", switchTo:"한국어",
     types:{
@@ -227,13 +248,36 @@ const NICK={
      winter:{dry:"Heater Crisp",oily:"Toasty Shine",combo:"Snowy Cheeks, Hot T-Zone",sensitive:"Windburn Cherry"}}
 };
 
-/* 제품 추천 — 2026년 뷰티 매체·리뷰 기사에서 자주 추천된 제품 (직접 써 본 후기 아님). 빼고 싶으면 이 객체를 비우면 됩니다. */
+/* 제품 추천 — 2026년 뷰티 매체·리뷰 기사에서 자주 추천된 제품 (직접 써 본 후기 아님). 빼고 싶으면 이 객체를 비우면 됩니다.
+   항목: [이름, 설명(ko), 설명(en), 그림 모양, 그림 색, 단짝 한 줄(ko), 단짝 한 줄(en)]  — 그림은 직접 그린 일러스트(실제 포장 아님) */
 const PRODUCTS={
-  dry:[["AESTURA ATOBARRIER365 Cream","장벽 보습 크림 · 피부과 전문가들이 자주 추천","Barrier cream · often recommended by dermatologists"],["LANEIGE Water Bank Blue Hyaluronic Cream","가볍게 오래가는 수분 크림","Light, long-lasting hydration cream"]],
-  oily:[["Beauty of Joseon Red Bean Water Gel","끈적임 적은 워터 젤","Water-based gel, not greasy"],["Isntree Hyaluronic Acid Aqua Gel Cream","오일프리 젤 크림, 빠르게 흡수","Oil-free gel cream that absorbs fast"]],
-  combo:[["Isntree Hyaluronic Acid Aqua Gel Cream","T존용 가벼운 젤 크림","Light gel cream for the T-zone"],["LANEIGE Water Bank Blue Hyaluronic Cream","건조한 볼용 수분 크림","Hydration cream for dry cheeks"]],
-  sensitive:[["ETUDE SoonJung 2x Barrier Intensive Cream","순한 장벽 크림","Gentle barrier cream"],["Anua Heartleaf 70 Soothing Cream","어성초 진정 크림","Heartleaf soothing cream"]]
+  dry:[["AESTURA ATOBARRIER365 Cream","장벽 보습 크림 · 피부과 전문가들이 자주 추천","Barrier cream · often recommended by dermatologists","jar","#f4c9b8","겨울 건조러의 든든한 보호막","A sturdy shield for winter dryness"],["LANEIGE Water Bank Blue Hyaluronic Cream","가볍게 오래가는 수분 크림","Light, long-lasting hydration cream","jar","#bcd8f2","촉촉함이 오래가는 단짝","A long-lasting hydration partner"]],
+  oily:[["Beauty of Joseon Red Bean Water Gel","끈적임 적은 워터 젤","Water-based gel, not greasy","jar","#f1b9bf","번들거리지 않는 시원한 단짝","A cool, non-greasy partner"],["Isntree Hyaluronic Acid Aqua Gel Cream","오일프리 젤 크림, 빠르게 흡수","Oil-free gel cream that absorbs fast","tube","#bfe6e0","산뜻하게 스며드는 단짝","Soaks in fresh and light"]],
+  combo:[["Isntree Hyaluronic Acid Aqua Gel Cream","T존용 가벼운 젤 크림","Light gel cream for the T-zone","tube","#bfe6e0","T존이 좋아하는 산뜻이","Your T-zone's favorite lightweight"],["LANEIGE Water Bank Blue Hyaluronic Cream","건조한 볼용 수분 크림","Hydration cream for dry cheeks","jar","#bcd8f2","건조한 볼이 좋아하는 촉촉이","Dry cheeks' favorite moisture"]],
+  sensitive:[["ETUDE SoonJung 2x Barrier Intensive Cream","순한 장벽 크림","Gentle barrier cream","tube","#f6d9c3","살살 달래 주는 순한 단짝","A gentle soother"],["Anua Heartleaf 70 Soothing Cream","어성초 진정 크림","Heartleaf soothing cream","jar","#cfe8c9","붉은 얼굴을 식혀 주는 단짝","Cools down a flushed face"]]
 };
+function pIcon(kind,c){
+  if(kind==="tube") return `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 6h20l-2 8H16z" fill="#fff" stroke="#d3dbe8" stroke-width="1.2"/><path d="M13 14h22l-3 28H16z" fill="${c}" stroke="rgba(0,0,0,.12)" stroke-width="1.2"/><circle cx="24" cy="29" r="4.5" fill="#fff" fill-opacity=".75"/><path d="M24 25.5c1.6 2 2.6 3 2.6 4.3a2.6 2.6 0 0 1-5.2 0c0-1.3 1-2.3 2.6-4.3z" fill="${c}"/></svg>`;
+  return `<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="10" rx="4" fill="#fff" stroke="#d3dbe8" stroke-width="1.2"/><rect x="7" y="19" width="34" height="23" rx="8" fill="${c}" stroke="rgba(0,0,0,.12)" stroke-width="1.2"/><circle cx="24" cy="30.5" r="5.5" fill="#fff" fill-opacity=".75"/><path d="M24 26c2 2.4 3.2 3.6 3.2 5.2a3.2 3.2 0 0 1-6.4 0c0-1.6 1.2-2.8 3.2-5.2z" fill="${c}"/><path d="M12 24c.5-2 2-3.2 4-3.4" stroke="#fff" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>`;
+}
+/* 친구 궁합 (재미용). 순서: dry, oily, combo, sensitive */
+const MATCH={
+  "dry-dry":[88,"둘 다 촉촉이가 필요해요. 크림 나눔 필수!","You both need moisture. Share the cream!"],
+  "oily-oily":[85,"둘 다 번들번들, 기름종이 공동 구매 추천","Both glowing: buy blotting paper together"],
+  "combo-combo":[90,"T존도 볼도 서로 이해하는 사이","You get each other, T-zone and cheeks"],
+  "sensitive-sensitive":[82,"둘 다 살살 달래야 해요. 조심조심 단짝","Both need gentle care: careful besties"],
+  "dry-oily":[96,"없는 걸 서로 가진 찰떡궁합, 반대라서 끌려요","Opposites attract: you each have what the other lacks"],
+  "dry-combo":[84,"볼 보습은 같이, T존만 따로 챙겨요","Moisturize cheeks together, T-zone solo"],
+  "dry-sensitive":[78,"보습과 진정, 장벽 케어를 함께해요","Hydration and calm: barrier care together"],
+  "oily-combo":[87,"가벼운 젤 크림으로 의기투합","United by lightweight gel creams"],
+  "oily-sensitive":[74,"유분은 줄이고 진정은 늘려요. 천천히!","Less oil, more calm. Take it slow!"],
+  "combo-sensitive":[80,"부위별 케어 + 순한 제품이 포인트","Zone-by-zone care with gentle products"]
+};
+const ORDER=["dry","oily","combo","sensitive"];
+function matchOf(a,b){const [x,y]=[a,b].sort((m,n)=>ORDER.indexOf(m)-ORDER.indexOf(n));return MATCH[x+"-"+y]}
+/* 친구 링크 ?t=타입&s=계절 */
+let friend=null;
+try{const q=new URLSearchParams(location.search),t=q.get("t"),sn=q.get("s");if(ORDER.includes(t))friend={type:t,season:SEASONS[sn]?sn:"winter"}}catch(e){}
 const PKEY="skinPassport";
 function getPass(){try{return JSON.parse(localStorage.getItem(PKEY)||"{}")}catch(e){return {}}}
 function setPass(o){try{localStorage.setItem(PKEY,JSON.stringify(o))}catch(e){}}
@@ -286,6 +330,7 @@ function render(){
   document.documentElement.lang = lang;
   langBtn.textContent = t.switchTo;
   document.title = lang==="ko" ? "피부타입 진단 퀴즈" : "Skin Type Quiz";
+  if(idx===-4) return renderMatch(t);
   if(idx===-3) return renderPass(t);
   if(idx===-2) return renderSeason(t);
   if(idx<0) return renderIntro(t);
@@ -294,6 +339,7 @@ function render(){
 }
 function renderIntro(t){
   app.innerHTML = `<section class="panel">
+    ${friend?`<div class="friendb"><div class="fb-face">${skin(friend.type,true)}</div><div><b>${esc(t.friendIs(NICK[lang][friend.season][friend.type]+(lang==="ko"?" 타입":" Type")))}</b><br>${esc(t.friendAsk)}</div></div>`:""}
     <div class="hero"><div class="face">${skin('base')}</div></div>
     <h1>${esc(t.title)}</h1>
     <p class="lead">${nl(t.lead)}</p>
@@ -336,6 +382,44 @@ function result(){
   // tie → the most recently chosen among the tied types
   for(let i=picks.length-1;i>=0;i--) if(score[picks[i]]===max) return picks[i];
 }
+function shareMe(k,nick){
+  const t=T[lang], url=location.origin+location.pathname+`?t=${k}&s=${season}`;
+  const text=t.shareText(nick);
+  const toast=document.getElementById("toast");
+  const done=()=>{if(toast){toast.textContent=t.copied;toast.classList.remove("hidden");setTimeout(()=>toast.classList.add("hidden"),2600)}};
+  if(navigator.share){navigator.share({title:document.title,text,url}).catch(()=>{});return}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text+" "+url).then(done,()=>{window.prompt("Copy",text+" "+url)});return}
+  window.prompt("Copy",text+" "+url);
+}
+function renderMatch(t){
+  const k=result(), S=SEASONS[season], F=friend||{type:k,season:season};
+  const [pct,ko,en]=matchOf(k,F.type);
+  const my=PRODUCTS[k][0], fr=PRODUCTS[F.type][k===F.type?1:0];
+  const nick=(sea,ty)=>NICK[lang][sea][ty]+(lang==="ko"?" 타입":" Type");
+  const prod=x=>`<div class="mp"><i class="pic">${pIcon(x[3],x[4])}</i><span>${esc(x[0])}</span></div>`;
+  app.innerHTML=`<section class="stage">
+    <div class="story" style="--c1:#fde4ec;--c2:#dcebfa" id="card">
+      <div class="small">${esc(t.matchSmall)}</div>
+      <div class="mrow">
+        <div class="mcol"><div class="mface">${skin(k)}</div><div class="mn">${esc(nick(season,k))}</div></div>
+        <div class="mheart">♥</div>
+        <div class="mcol"><div class="mface">${skin(F.type)}</div><div class="mn">${esc(nick(F.season,F.type))}</div></div>
+      </div>
+      <div class="mpct">${pct}%</div>
+      <div class="mline">${esc(lang==="ko"?ko:en)}</div>
+      <div class="mtitle">${esc(t.comboTitle)}</div>
+      <div class="mprods">${prod(my)}${prod(fr)}</div>
+      <div class="foot">${nl(t.foot)}</div>
+      <div class="disc">${esc(t.disc)}</div>
+    </div>
+    <p class="hint">${esc(t.hint)}</p>
+    <button class="btn wide" id="share" type="button">${esc(t.shareBtn)}</button>
+    <button class="btn ghost wide" id="bk" type="button">${esc(t.back)}</button>
+    <div class="toast hidden" id="toast"></div>
+  </section>`;
+  document.getElementById("share").onclick=()=>shareMe(k,NICK[lang][season][k]);
+  document.getElementById("bk").onclick=()=>{idx=6;render();window.scrollTo(0,0)};
+}
 function renderPass(t){
   const P=getPass(), n=passCount();
   const done=Object.keys(SEASONS).map(k=>P[k]&&P[k].type).filter(Boolean);
@@ -375,10 +459,15 @@ function renderResult(t){
       <div class="disc">${esc(t.disc)}</div>
     </div>
     <p class="hint">${esc(t.hint)} · ${esc(t.stamped)} ${passCount()}/4</p>
-    ${PRODUCTS[k]?`<div class="rec"><h3>${esc(t.recTitle(ty.name))}</h3><ul>${PRODUCTS[k].map(x=>`<li><b>${esc(x[0])}</b><span>${esc(lang==="ko"?x[1]:x[2])}</span></li>`).join("")}</ul><p>${esc(t.recNote)}</p></div>`:""}
+    ${PRODUCTS[k]?`<div class="rec"><h3>${esc(t.recTitle(ty.name))}</h3><ul>${PRODUCTS[k].map(x=>`<li><i class="pic">${pIcon(x[3],x[4])}</i><div><b>${esc(x[0])}</b><span>${esc(lang==="ko"?x[1]:x[2])}</span><em>💗 ${esc(t.matchLabel)}: ${esc(lang==="ko"?x[5]:x[6])}</em></div></li>`).join("")}</ul><p>${esc(t.recNote)} ${esc(t.illus)}</p></div>`:""}
+    <button class="btn wide" id="share" type="button">${esc(t.shareBtn)}</button>
+    ${friend?`<button class="btn wide" id="cmp" type="button">${esc(t.compBtn)}</button>`:""}
+    <div class="toast hidden" id="toast"></div>
     <button class="btn wide" id="pass" type="button">${passCount()===4?"✨ ":""}${esc(passCount()===4?t.passDone:t.passBtn+" ("+passCount()+"/4)")}</button>
     <div class="row"><button class="btn ghost" id="again" type="button">${esc(t.again)}</button><button class="btn ghost" id="other" type="button">${esc(t.other)}</button></div>
   </section>`;
+  document.getElementById("share").onclick=()=>shareMe(k,NICK[lang][season][k]);
+  const cmp=document.getElementById("cmp");if(cmp)cmp.onclick=()=>{idx=-4;render();window.scrollTo(0,0)};
   document.getElementById("pass").onclick=()=>{idx=-3;render();window.scrollTo(0,0)};
   document.getElementById("again").onclick=()=>{idx=0;picks=[];render();window.scrollTo(0,0)};
   document.getElementById("other").onclick=()=>{idx=-2;picks=[];render();window.scrollTo(0,0)};
