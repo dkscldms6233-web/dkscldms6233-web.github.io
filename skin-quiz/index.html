@@ -124,36 +124,36 @@ const ACCOUNT = "@yourbeauty"; // ← 인스타그램 예비 주소. 정해지�
 const T = {
   ko:{
     brand:"피부타입 진단",
-    title:"내 피부, 대체 무슨 타입이야?", lead:"계절 따라 얼굴도 성격이 바뀌어요.\n계절 고르고 6문제만 답하면\n내 피부 별명이 나와요 ✨",
-    start:"내 피부 별명 받으러 가기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", prev:"← 이전", toStart:"← 처음으로", other:"다른 계절 피부도 보기", passBtn:"내 피부 계절 도감", passTitle:"나의 피부 계절 도감", passDone:"피부 계절 도감 완성", passSmall:"피부 계절 도감", passLeft:"아직 못 모은 계절이 있어요", back:"돌아가기", reset:"도감 지우기", empty:"아직 못 만났어요", stamped:"도감에 등록됨", seasonQ:"어느 계절의 내 얼굴이 궁금해요?", hint:"캡처해서 스토리에 자랑하세요",
+    title:"내 피부는 무슨 타입일까?", lead:"계절마다 피부는 달라져요.\n계절을 고르고 6문제로 확인해 보세요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
+    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", prev:"← 이전", toStart:"← 처음으로", other:"다른 계절로", passBtn:"내 피부 계절 도감", passTitle:"나의 피부 계절 도감", passDone:"피부 계절 도감 완성", passSmall:"피부 계절 도감", passLeft:"아직 못 모은 계절이 있어요", back:"돌아가기", reset:"도감 지우기", empty:"아직 비어 있어요", stamped:"도감에 등록됨", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
     foot:`${ACCOUNT}\n팔로우하고 더 많은 정보를 알아가세요`,
-    disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"재미로 보는 테스트예요. 의학적 진단이 아닙니다.", switchTo:"English",
+    disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"의학적 진단이 아닙니다.", switchTo:"English",
     types:{
-      dry:{name:"건성", tag:"촉촉함이 제일 급한 타입", tips:["세안 후 1분 안에 보습제를 발라 수분을 가둬 주세요.","세안은 미온수로, 너무 자주 하지 않기.","겨울엔 크림을 한 겹 더, 실내 습도 40~60% 유지."]},
-      oily:{name:"지성", tag:"번들거림은 살아있다는 증거예요", tips:["가벼운 젤·로션 타입으로 수분은 꼭 채워 주세요.","하루 두 번 순한 세안, 과한 클렌징은 피하기.","유분이 많아도 보습을 건너뛰지 않기."]},
-      combo:{name:"복합성", tag:"한 얼굴에 두 가지 성격이 사는 타입", tips:["T존은 가볍게, 건조한 볼은 보습을 한 겹 더.","부위별로 제품 양을 조절해 바르기.","계절에 따라 루틴을 바꿔 주세요."]},
-      sensitive:{name:"민감성", tag:"작은 자극에도 발그레, 살살 달래 주세요", tips:["새 제품은 팔 안쪽에 먼저 테스트하고 하나씩만 추가하기.","향·알코올이 적은 순한 제품 위주로 단순한 루틴 만들기.","뜨거운 물과 문지르는 세안은 피하고, 선크림은 꼭 챙기기."]}
+      dry:{name:"건성", tag:"촉촉함이 가장 필요한 타입", tips:["세안 후 1분 안에 보습제를 발라 수분을 가둬 주세요.","세안은 미온수로, 너무 자주 하지 않기.","겨울엔 크림을 한 겹 더, 실내 습도 40~60% 유지."]},
+      oily:{name:"지성", tag:"번들거림은 건강하다는 신호이기도 해요", tips:["가벼운 젤·로션 타입으로 수분은 꼭 채워 주세요.","하루 두 번 순한 세안, 과한 클렌징은 피하기.","유분이 많아도 보습을 건너뛰지 않기."]},
+      combo:{name:"복합성", tag:"부위마다 다르게 챙겨 주는 타입", tips:["T존은 가볍게, 건조한 볼은 보습을 한 겹 더.","부위별로 제품 양을 조절해 바르기.","계절에 따라 루틴을 바꿔 주세요."]},
+      sensitive:{name:"민감성", tag:"자극 없이 천천히, 단순하게", tips:["새 제품은 팔 안쪽에 먼저 테스트하고 하나씩만 추가하기.","향·알코올이 적은 순한 제품 위주로 단순한 루틴 만들기.","뜨거운 물과 문지르는 세안은 피하고, 선크림은 꼭 챙기기."]}
     },
     q:[
-      {t:"샤워 후 아무것도 안 바르고 30분, 내 얼굴은?",o:[["얼굴이 쩍쩍 당겨요","dry"],["붉어지고 따끔따끔해요","sensitive"],["이마·코만 번들번들해요","combo"],["얼굴 전체가 기름 코팅이에요","oily"]]},
-      {t:"{s} 오후 3시, 화장실 거울 속 내 얼굴은?",o:[["이마·코는 번들, 볼은 바삭해요","combo"],["전체적으로 번들번들 광이 나요","oily"],["각질이 슬금슬금 올라와요","dry"],["얼굴이 홍당무처럼 달아올라 있어요","sensitive"]]},
-      {t:"택배로 신상 스킨케어가 왔다. 써 보면 보통?",o:[["흡수 속도 실화? 더 달라고 해요","dry"],["금세 번들거려서 후회해요","oily"],["따갑거나 붉어져요. 신상이 날 시험해요","sensitive"],["이마는 멀쩡한데 볼만 당겨요","combo"]]},
-      {t:"셀카를 가까이서 찍으면 내 모공은?",o:[["코랑 볼 주변만 존재감이 있어요","combo"],["있긴 한가요? 거의 안 보여요","dry"],["전체적으로 넓은 편이에요","oily"],["모공보다 붉은기가 더 신경 쓰여요","sensitive"]]},
-      {t:"{s} 날씨에 밖에 다녀오면 내 피부는?",o:[["붉어지고 따가워요, 얼굴이 항의해요","sensitive"],["각질이 일어나고 바삭해져요","dry"],["볼만 건조하고 T존은 꿋꿋해요","combo"],["별 변화 없고 오히려 더 번들거려요","oily"]]},
-      {t:"아침에 선크림을 발랐다. 점심시간이 되면?",o:[["T존만 먼저 무너져요","combo"],["가렵거나 화끈거려요","sensitive"],["들뜨고 갈라져요","dry"],["전체가 주르륵 흘러내려요","oily"]]}
+      {t:"샤워 후 아무것도 안 바르고 30분, 내 얼굴은?",o:[["얼굴 전체가 당겨요","dry"],["붉어지거나 따끔해요","sensitive"],["이마·코만 번들거려요","combo"],["전체가 번들거려요","oily"]]},
+      {t:"{s} 오후 3시, 화장실 거울 속 내 얼굴은?",o:[["이마·코는 번들, 볼은 건조해요","combo"],["전체적으로 번들거려요","oily"],["각질이 일어나 보여요","dry"],["얼굴이 붉게 달아올라 있어요","sensitive"]]},
+      {t:"택배로 신상 스킨케어가 왔다. 써 보면 보통?",o:[["빨리 흡수되고 더 달라고 해요","dry"],["금방 번들거려요","oily"],["따갑거나 붉어지기 쉬워요","sensitive"],["이마는 괜찮은데 볼이 당겨요","combo"]]},
+      {t:"셀카를 가까이서 찍으면 내 모공은?",o:[["코·볼 주변만 눈에 띄어요","combo"],["거의 안 보여요","dry"],["전체적으로 넓은 편이에요","oily"],["모공보다 붉은기가 더 신경 쓰여요","sensitive"]]},
+      {t:"{s} 날씨에 밖에 다녀오면 내 피부는?",o:[["붉어지고 따가워요","sensitive"],["각질이 일어나고 건조해요","dry"],["볼은 건조한데 T존은 그대로예요","combo"],["별 변화 없고 오히려 번들거려요","oily"]]},
+      {t:"아침에 선크림을 발랐다. 점심시간이 되면?",o:[["T존만 무너져요","combo"],["가려움이나 화끈거림이 있어요","sensitive"],["들뜨고 갈라져요","dry"],["전체가 흘러내려요","oily"]]}
     ]
   },
   en:{
     brand:"Skin Type Quiz",
-    title:"What's your skin REALLY like?", lead:"Your face has moods, season by season.\nPick a season, answer 6 questions,\nand get your skin nickname ✨",
-    start:"Get my skin nickname", of:(a,b)=>`${a} / ${b}`, again:"Retake", prev:"← Back", toStart:"← Start over", other:"Try another season", passBtn:"My skin collection", passTitle:"My Skin Season Collection", passDone:"Season Collection complete", passSmall:"SEASON COLLECTION", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear collection", empty:"Not met yet", stamped:"Added to collection", seasonQ:"Which season's skin are we checking?", hint:"Screenshot it and brag on your story",
+    title:"What's your skin type?", lead:"Skin changes with the seasons.\nPick a season and answer 6 questions.\nShare your result card right to your story.",
+    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", prev:"← Back", toStart:"← Start over", other:"Other season", passBtn:"My skin collection", passTitle:"My Skin Season Collection", passDone:"Season Collection complete", passSmall:"SEASON COLLECTION", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear collection", empty:"Still empty", stamped:"Added to collection", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
     foot:`${ACCOUNT}\nFollow to discover more skin tips`,
-    disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Just for fun. Not a medical diagnosis.", switchTo:"한국어",
+    disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Not a medical diagnosis.", switchTo:"한국어",
     types:{
-      dry:{name:"Dry", tag:"Moisture is your love language", tips:["Apply moisturizer within a minute of cleansing to lock in water.","Wash with lukewarm water and don't over-cleanse.","Add an extra layer of cream in winter; keep indoor humidity at 40–60%."]},
-      oily:{name:"Oily", tag:"Shine means you're glowing (kind of)", tips:["Use light gel or lotion textures, but never skip hydration.","Cleanse gently twice a day; avoid harsh scrubbing.","Oily skin still needs moisturizer."]},
-      combo:{name:"Combination", tag:"Two personalities, one face", tips:["Keep the T-zone light and give dry cheeks an extra layer.","Adjust the amount of product by area.","Tweak your routine with the seasons."]},
-      sensitive:{name:"Sensitive", tag:"Gentle, slow, and drama-free", tips:["Patch-test new products on your inner arm and add one at a time.","Keep a simple routine with fragrance-free, gentle formulas.","Avoid hot water and rubbing; never skip sunscreen."]}
+      dry:{name:"Dry", tag:"Moisture is your best friend", tips:["Apply moisturizer within a minute of cleansing to lock in water.","Wash with lukewarm water and don't over-cleanse.","Add an extra layer of cream in winter; keep indoor humidity at 40–60%."]},
+      oily:{name:"Oily", tag:"A little shine is perfectly normal", tips:["Use light gel or lotion textures, but never skip hydration.","Cleanse gently twice a day; avoid harsh scrubbing.","Oily skin still needs moisturizer."]},
+      combo:{name:"Combination", tag:"Different zones, different care", tips:["Keep the T-zone light and give dry cheeks an extra layer.","Adjust the amount of product by area.","Tweak your routine with the seasons."]},
+      sensitive:{name:"Sensitive", tag:"Slow, simple, and gentle", tips:["Patch-test new products on your inner arm and add one at a time.","Keep a simple routine with fragrance-free, gentle formulas.","Avoid hot water and rubbing; never skip sunscreen."]}
     },
     q:[
       {t:"Out of the shower, nothing applied, 30 minutes later your face feels…",o:[["Tight all over","dry"],["Red or stingy","sensitive"],["Shiny on forehead and nose only","combo"],["Shiny all over","oily"]]},
@@ -167,10 +167,10 @@ const T = {
 };
 
 const SEASONS={
-  spring:{sym:"🌸",ko:"봄",en:"spring",EN:"Spring",hk:"꽃가루 · 일교차 대환장",he:"Pollen · mood-swing weather",c:["#fde4ec","#e4f3dd"],a:"#e58fae"},
-  summer:{sym:"☀️",ko:"여름",en:"summer",EN:"Summer",hk:"땀 · 자외선 · 에어컨 지옥",he:"Sweat · UV · AC chaos",c:["#d8f0fb","#e0f5ee"],a:"#4fa8d6"},
-  autumn:{sym:"🍂",ko:"가을",en:"autumn",EN:"Autumn",hk:"슬슬 바삭해지는 중",he:"Getting crispy",c:["#fde6d0","#f3e0c6"],a:"#d98c4f"},
-  winter:{sym:"❄️",ko:"겨울",en:"winter",EN:"Winter",hk:"찬바람 · 히터 앞 바삭",he:"Cold wind · heater crisp",c:["#dcebfa","#ece6f7"],a:"#7ea6d6"}
+  spring:{sym:"🌸",ko:"봄",en:"spring",EN:"Spring",hk:"환절기 · 꽃가루",he:"Seasonal change · pollen",c:["#fde4ec","#e4f3dd"],a:"#e58fae"},
+  summer:{sym:"☀️",ko:"여름",en:"summer",EN:"Summer",hk:"땀 · 자외선 · 에어컨",he:"Sweat · UV · AC",c:["#d8f0fb","#e0f5ee"],a:"#4fa8d6"},
+  autumn:{sym:"🍂",ko:"가을",en:"autumn",EN:"Autumn",hk:"건조 시작 · 일교차",he:"Dryness starts · big swings",c:["#fde6d0","#f3e0c6"],a:"#d98c4f"},
+  winter:{sym:"❄️",ko:"겨울",en:"winter",EN:"Winter",hk:"찬바람 · 난방",he:"Cold wind · heating",c:["#dcebfa","#ece6f7"],a:"#7ea6d6"}
 };
 const ST={
  ko:{
