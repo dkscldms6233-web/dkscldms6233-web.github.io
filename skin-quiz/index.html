@@ -70,11 +70,23 @@ p.lead{color:var(--sub);line-height:1.6;font-size:15px}
 }
 .story .small{font-size:3.6cqw;letter-spacing:.08em;opacity:.75;text-align:center}
 .story .head{text-align:center}
-.story .face{width:44cqw;margin:2cqw auto 0;filter:drop-shadow(0 1.6cqw 3cqw rgba(190,110,110,.3))}
+.story .face{width:36cqw;margin:1.5cqw auto 0;filter:drop-shadow(0 1.6cqw 3cqw rgba(190,110,110,.3))}
 .story .face-wrap{position:relative}
 .story .face-wrap::before,.story .face-wrap::after{content:var(--sym);position:absolute;font-size:6cqw}
-.story .face-wrap::before{left:12cqw;top:6cqw}.story .face-wrap::after{right:11cqw;top:26cqw;font-size:4.6cqw}
-.story .type{font-size:11.5cqw;font-weight:800;line-height:1.1;margin-top:3cqw;text-align:center}
+.story .face-wrap::before{left:15cqw;top:5cqw}.story .face-wrap::after{right:14cqw;top:22cqw;font-size:4.6cqw}
+.story .chip{display:table;margin:2.5cqw auto 0;background:rgba(255,255,255,.7);border-radius:99px;padding:1cqw 3.6cqw;font-size:3.8cqw;font-weight:700}
+.story .type{font-size:8.2cqw;font-weight:800;line-height:1.15;margin-top:2cqw;text-align:center}
+.story .prow{display:flex;align-items:center;gap:3.4cqw;background:rgba(255,255,255,.62);border-radius:4cqw;padding:2.6cqw 3.4cqw;margin-top:2.6cqw}
+.story .prow.empty{background:rgba(255,255,255,.28);border:.4cqw dashed rgba(60,80,110,.3)}
+.story .pface{flex:none;width:17cqw;height:17cqw;border-radius:50%;overflow:hidden;background:#f1cdbd;border:.6cqw solid #fff}
+.story .pface svg{display:block;width:100%;height:100%}
+.story .ptx{min-width:0;flex:1;line-height:1.3}
+.story .pse{font-size:3.6cqw;opacity:.7}.story .pnm{font-size:5cqw;font-weight:800}.story .pty{font-size:3.6cqw;opacity:.8}
+.story .ptitle{text-align:center;font-size:7.4cqw;font-weight:800;line-height:1.2;margin-top:3cqw}
+.story .psub{text-align:center;font-size:4cqw;margin-top:1.6cqw;opacity:.85;line-height:1.4}
+.stamp{font-size:11px;color:var(--sub);margin-top:2px}
+.btn.wide{width:var(--w,100%);max-width:420px}
+.minilink{background:none;border:0;color:var(--sub);font-size:13px;text-decoration:underline;cursor:pointer;padding:6px}
 .story .tag{font-size:4.2cqw;margin-top:1.8cqw;opacity:.85;line-height:1.4;text-align:center}
 .story ul{list-style:none;margin-top:5cqw;display:flex;flex-direction:column;gap:2.8cqw}
 .story li{background:rgba(255,255,255,.62);border-radius:4cqw;padding:3.2cqw 4cqw;font-size:4.2cqw;line-height:1.45}
@@ -113,7 +125,7 @@ const T = {
   ko:{
     brand:"피부타입 진단",
     title:"나는 어떤 피부타입일까?", lead:"계절마다 피부는 달라져요.\n계절을 고르고 6문제로 확인해 보세요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
-    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", other:"다른 계절로", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
+    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", other:"다른 계절로", passBtn:"내 피부 여권", passTitle:"나의 1년 피부 여권", passDone:"1년 피부 지도 완성", passLeft:"아직 못 찍은 계절이 있어요", back:"돌아가기", reset:"여권 지우기", empty:"아직 비어 있어요", stamped:"여권에 도장 찍힘", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
     foot:`${ACCOUNT}\n팔로우하고 더 많은 정보를 알아가세요`,
     disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"의학적 진단이 아닙니다.", switchTo:"English",
     types:{
@@ -123,18 +135,18 @@ const T = {
       sensitive:{name:"민감성", tag:"자극 없이 천천히, 단순하게", tips:["새 제품은 팔 안쪽에 먼저 테스트하고 하나씩만 추가하기.","향·알코올이 적은 순한 제품 위주로 단순한 루틴 만들기.","뜨거운 물과 문지르는 세안은 피하고, 선크림은 꼭 챙기기."]}
     },
     q:[
-      {t:"세안 후 30분, 아무것도 바르지 않은 얼굴은?",o:[["얼굴 전체가 당겨요","dry"],["붉어지거나 따끔해요","sensitive"],["이마·코만 번들거려요","combo"],["전체가 번들거려요","oily"]]},
-      {t:"오후 3시, 거울 속 내 얼굴은?",o:[["이마·코는 번들, 볼은 건조해요","combo"],["전체적으로 번들거려요","oily"],["각질이 일어나 보여요","dry"],["얼굴이 붉게 달아올라 있어요","sensitive"]]},
-      {t:"새 스킨케어 제품을 쓰면 보통?",o:[["빨리 흡수되고 더 달라고 해요","dry"],["금방 번들거려요","oily"],["따갑거나 붉어지기 쉬워요","sensitive"],["이마는 괜찮은데 볼이 당겨요","combo"]]},
-      {t:"내 모공은?",o:[["코·볼 주변만 눈에 띄어요","combo"],["거의 안 보여요","dry"],["전체적으로 넓은 편이에요","oily"],["모공보다 붉은기가 더 신경 쓰여요","sensitive"]]},
-      {t:"{s} 날씨에 내 피부는?",o:[["붉어지고 따가워요","sensitive"],["각질이 일어나고 건조해요","dry"],["볼은 건조한데 T존은 그대로예요","combo"],["별 변화 없고 오히려 번들거려요","oily"]]},
-      {t:"선크림·베이스를 바르고 한낮이 되면?",o:[["T존만 무너져요","combo"],["가려움이나 화끈거림이 있어요","sensitive"],["들뜨고 갈라져요","dry"],["전체가 흘러내려요","oily"]]}
+      {t:"샤워 후 아무것도 안 바르고 30분, 내 얼굴은?",o:[["얼굴 전체가 당겨요","dry"],["붉어지거나 따끔해요","sensitive"],["이마·코만 번들거려요","combo"],["전체가 번들거려요","oily"]]},
+      {t:"{s} 오후 3시, 화장실 거울 속 내 얼굴은?",o:[["이마·코는 번들, 볼은 건조해요","combo"],["전체적으로 번들거려요","oily"],["각질이 일어나 보여요","dry"],["얼굴이 붉게 달아올라 있어요","sensitive"]]},
+      {t:"택배로 신상 스킨케어가 왔다. 써 보면 보통?",o:[["빨리 흡수되고 더 달라고 해요","dry"],["금방 번들거려요","oily"],["따갑거나 붉어지기 쉬워요","sensitive"],["이마는 괜찮은데 볼이 당겨요","combo"]]},
+      {t:"셀카를 가까이서 찍으면 내 모공은?",o:[["코·볼 주변만 눈에 띄어요","combo"],["거의 안 보여요","dry"],["전체적으로 넓은 편이에요","oily"],["모공보다 붉은기가 더 신경 쓰여요","sensitive"]]},
+      {t:"{s} 날씨에 밖에 다녀오면 내 피부는?",o:[["붉어지고 따가워요","sensitive"],["각질이 일어나고 건조해요","dry"],["볼은 건조한데 T존은 그대로예요","combo"],["별 변화 없고 오히려 번들거려요","oily"]]},
+      {t:"아침에 선크림을 발랐다. 점심시간이 되면?",o:[["T존만 무너져요","combo"],["가려움이나 화끈거림이 있어요","sensitive"],["들뜨고 갈라져요","dry"],["전체가 흘러내려요","oily"]]}
     ]
   },
   en:{
     brand:"Skin Type Quiz",
     title:"What's your skin type?", lead:"Skin changes with the seasons.\nPick a season and answer 6 questions.\nShare your result card right to your story.",
-    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", other:"Other season", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
+    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", other:"Other season", passBtn:"My skin passport", passTitle:"My 1-year skin passport", passDone:"Your 1-year skin map", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear passport", empty:"Still empty", stamped:"Stamped in passport", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
     foot:`${ACCOUNT}\nFollow to discover more skin tips`,
     disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Not a medical diagnosis.", switchTo:"한국어",
     types:{
@@ -144,12 +156,12 @@ const T = {
       sensitive:{name:"Sensitive", tag:"Slow, simple, and gentle", tips:["Patch-test new products on your inner arm and add one at a time.","Keep a simple routine with fragrance-free, gentle formulas.","Avoid hot water and rubbing; never skip sunscreen."]}
     },
     q:[
-      {t:"30 minutes after washing, with nothing applied, your face feels…",o:[["Tight all over","dry"],["Red or stingy","sensitive"],["Shiny on forehead and nose only","combo"],["Shiny all over","oily"]]},
-      {t:"At 3 p.m., your face in the mirror looks…",o:[["Shiny T-zone, dry cheeks","combo"],["Shiny all over","oily"],["Flaky in places","dry"],["Flushed and warm","sensitive"]]},
-      {t:"When you try a new skincare product, usually…",o:[["It soaks in fast and I want more","dry"],["I get shiny quickly","oily"],["It stings or turns me red easily","sensitive"],["Forehead is fine but cheeks feel tight","combo"]]},
-      {t:"Your pores are…",o:[["Visible only around nose and cheeks","combo"],["Barely visible","dry"],["Large overall","oily"],["Redness bothers me more than pores","sensitive"]]},
-      {t:"In {s} weather, your skin…",o:[["Red and stingy","sensitive"],["Flaky and dry","dry"],["Dry cheeks, same T-zone","combo"],["No change, or even shinier","oily"]]},
-      {t:"By midday after sunscreen or base makeup…",o:[["Only the T-zone breaks down","combo"],["Itchy or burning","sensitive"],["Patchy and cracked","dry"],["Everything slides off","oily"]]}
+      {t:"Out of the shower, nothing applied, 30 minutes later your face feels…",o:[["Tight all over","dry"],["Red or stingy","sensitive"],["Shiny on forehead and nose only","combo"],["Shiny all over","oily"]]},
+      {t:"{s} afternoon, 3 p.m., restroom mirror. Your face looks…",o:[["Shiny T-zone, dry cheeks","combo"],["Shiny all over","oily"],["Flaky in places","dry"],["Flushed and warm","sensitive"]]},
+      {t:"A new skincare parcel arrives. When you try it, usually…",o:[["It soaks in fast and I want more","dry"],["I get shiny quickly","oily"],["It stings or turns me red easily","sensitive"],["Forehead is fine but cheeks feel tight","combo"]]},
+      {t:"In a close-up selfie, your pores are…",o:[["Visible only around nose and cheeks","combo"],["Barely visible","dry"],["Large overall","oily"],["Redness bothers me more than pores","sensitive"]]},
+      {t:"After a day out in {s} weather, your skin…",o:[["Red and stingy","sensitive"],["Flaky and dry","dry"],["Dry cheeks, same T-zone","combo"],["No change, or even shinier","oily"]]},
+      {t:"You put on sunscreen this morning. By lunchtime…",o:[["Only the T-zone breaks down","combo"],["Itchy or burning","sensitive"],["Patchy and cracked","dry"],["Everything slides off","oily"]]}
     ]
   }
 };
@@ -175,6 +187,21 @@ const ST={
  }
 };
 let season=null;
+
+const NICK={
+ ko:{spring:{dry:"꽃가루 속 건조러",oily:"봄볕에 번들러",combo:"일교차 줄타기러",sensitive:"꽃가루에 발그레"},
+     summer:{dry:"에어컨 속 사막",oily:"물광 아닌 기름광",combo:"T존만 한여름",sensitive:"땀에 발그레"},
+     autumn:{dry:"낙엽보다 바삭",oily:"가을에도 번들",combo:"볼만 가을 타요",sensitive:"일교차 발그레"},
+     winter:{dry:"히터 앞 바삭이",oily:"군고구마 번들",combo:"눈밭 속 T존 용암",sensitive:"찬바람에 홍당무"}},
+ en:{spring:{dry:"Pollen-Season Parched",oily:"Spring Sun Shine",combo:"Weather-Swing Tightrope",sensitive:"Pollen Blush"},
+     summer:{dry:"AC Desert Skin",oily:"Gloss, Not Glow",combo:"T-Zone Summer",sensitive:"Sweat Blush"},
+     autumn:{dry:"Crispier Than Leaves",oily:"Still Shiny in Fall",combo:"Cheeks Go Autumn",sensitive:"Swing-Day Blush"},
+     winter:{dry:"Heater Crisp",oily:"Toasty Shine",combo:"Snowy Cheeks, Hot T-Zone",sensitive:"Windburn Cherry"}}
+};
+const PKEY="skinPassport";
+function getPass(){try{return JSON.parse(localStorage.getItem(PKEY)||"{}")}catch(e){return {}}}
+function setPass(o){try{localStorage.setItem(PKEY,JSON.stringify(o))}catch(e){}}
+function passCount(){return Object.keys(getPass()).filter(k=>SEASONS[k]).length}
 const PALETTE = {
   dry:["#dcebfa","#f3e6f2"], oily:["#d9f0ef","#e8f2fb"],
   combo:["#e4e6fa","#f6e9ef"], sensitive:["#fbe4ea","#e9eefb"]
@@ -223,6 +250,7 @@ function render(){
   document.documentElement.lang = lang;
   langBtn.textContent = t.switchTo;
   document.title = lang==="ko" ? "피부타입 진단 퀴즈" : "Skin Type Quiz";
+  if(idx===-3) return renderPass(t);
   if(idx===-2) return renderSeason(t);
   if(idx<0) return renderIntro(t);
   if(idx>=t.q.length) return renderResult(t);
@@ -241,9 +269,11 @@ function renderIntro(t){
 function renderSeason(t){
   app.innerHTML = `<section class="panel">
     <h2>${esc(t.seasonQ)}</h2>
-    <div class="seasons">${Object.keys(SEASONS).map(k=>{const S=SEASONS[k];return `<button class="sbtn" type="button" data-s="${k}" style="--s1:${S.c[0]};--s2:${S.c[1]}"><span class="ss">${S.sym}</span><span class="sn">${esc(lang==="ko"?S.ko:S.EN)}</span><span class="sh">${esc(lang==="ko"?S.hk:S.he)}</span></button>`}).join("")}</div>
+    <div class="seasons">${Object.keys(SEASONS).map(k=>{const S=SEASONS[k];return `<button class="sbtn" type="button" data-s="${k}" style="--s1:${S.c[0]};--s2:${S.c[1]}"><span class="ss">${S.sym}</span><span class="sn">${esc(lang==="ko"?S.ko:S.EN)}</span><span class="sh">${esc(lang==="ko"?S.hk:S.he)}</span>${getPass()[k]?`<span class="stamp">✓ ${esc(t.types[getPass()[k].type].name)}</span>`:""}</button>`}).join("")}</div>
+    ${passCount()?`<button class="btn ghost" id="pp" type="button">${esc(t.passBtn)} (${passCount()}/4)</button>`:""}
     <p class="note" style="margin-top:0">${esc(t.note)}</p>
   </section>`;
+  const pp=document.getElementById("pp");if(pp)pp.onclick=()=>{idx=-3;render();window.scrollTo(0,0)};
   app.querySelectorAll(".sbtn").forEach(b=>b.onclick=()=>{season=b.dataset.s;document.body.dataset.season=season;idx=0;picks=[];render();window.scrollTo(0,0)});
 }
 function renderQ(t){
@@ -267,21 +297,49 @@ function result(){
   // tie → the most recently chosen among the tied types
   for(let i=picks.length-1;i>=0;i--) if(score[picks[i]]===max) return picks[i];
 }
+function renderPass(t){
+  const P=getPass(), n=passCount();
+  const done=Object.keys(SEASONS).map(k=>P[k]&&P[k].type).filter(Boolean);
+  const uniq=new Set(done).size;
+  let sub=n<4?t.passLeft:(uniq===1?(lang==="ko"?"1년 내내 같은 타입이에요":"Same type all year"):(lang==="ko"?`계절 따라 ${uniq}가지 타입으로 바뀌어요`:`Your skin shifts across ${uniq} types`));
+  const rows=Object.keys(SEASONS).map(k=>{const S=SEASONS[k],e=P[k];
+    return e?`<div class="prow"><div class="pface">${skin(e.type,true)}</div><div class="ptx"><div class="pse">${S.sym} ${esc(lang==="ko"?S.ko:S.EN)}</div><div class="pnm">${esc(NICK[lang][k][e.type])}</div><div class="pty">${esc(t.types[e.type].name)}</div></div></div>`
+      :`<div class="prow empty"><div class="pface" style="background:transparent;border-style:dashed"></div><div class="ptx"><div class="pse">${S.sym} ${esc(lang==="ko"?S.ko:S.EN)}</div><div class="pty">${esc(t.empty)}</div></div></div>`}).join("");
+  app.innerHTML=`<section class="stage">
+    <div class="story" style="--c1:#e6eefb;--c2:#f7e9f0" id="card">
+      <div class="small">MY SKIN PASSPORT · ${n}/4</div>
+      <div class="ptitle">${esc(n===4?t.passDone:t.passTitle)}</div>
+      <div class="psub">${esc(sub)}</div>
+      <ul style="display:none"></ul>
+      <div style="margin-top:2cqw">${rows}</div>
+      <div class="foot">${nl(t.foot)}</div>
+      <div class="disc">${esc(t.disc)}</div>
+    </div>
+    <p class="hint">${esc(t.hint)}</p>
+    <button class="btn wide" id="bk" type="button">${esc(t.back)}</button>
+    <button class="minilink" id="rs" type="button">${esc(t.reset)}</button>
+  </section>`;
+  document.getElementById("bk").onclick=()=>{idx=-2;render();window.scrollTo(0,0)};
+  document.getElementById("rs").onclick=()=>{setPass({});render()};
+}
 function renderResult(t){
-  const k=result(), ty=t.types[k], S=SEASONS[season], [c1,c2]=S.c, tips=[ty.tips[0],...ST[lang][season][k]];
+  const k=result(); if(picks.length===6){const P=getPass();P[season]={type:k};setPass(P)} const ty=t.types[k], S=SEASONS[season], [c1,c2]=S.c, tips=[ty.tips[0],...ST[lang][season][k]];
   app.innerHTML = `<section class="stage">
     <div class="story" style="--c1:${c1};--c2:${c2};--sym:'${S.sym}'" id="card">
       <div class="small">${esc(t.small)} · ${esc(lang==='ko'?S.ko:S.EN)}</div>
       <div class="face-wrap"><div class="face">${skin(k)}</div></div>
-      <div class="type">${esc(ty.name)}</div>
+      <div class="chip">${esc(ty.name)}</div>
+      <div class="type">${esc(NICK[lang][season][k])}</div>
       <div class="tag">${esc(ty.tag)}</div>
       <ul>${tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
       <div class="foot">${nl(t.foot)}</div>
       <div class="disc">${esc(t.disc)}</div>
     </div>
-    <p class="hint">${esc(t.hint)}</p>
+    <p class="hint">${esc(t.hint)} · ${esc(t.stamped)} ${passCount()}/4</p>
+    <button class="btn wide" id="pass" type="button">${passCount()===4?"✨ ":""}${esc(passCount()===4?t.passDone:t.passBtn+" ("+passCount()+"/4)")}</button>
     <div class="row"><button class="btn ghost" id="again" type="button">${esc(t.again)}</button><button class="btn ghost" id="other" type="button">${esc(t.other)}</button></div>
   </section>`;
+  document.getElementById("pass").onclick=()=>{idx=-3;render();window.scrollTo(0,0)};
   document.getElementById("again").onclick=()=>{idx=0;picks=[];render();window.scrollTo(0,0)};
   document.getElementById("other").onclick=()=>{idx=-2;picks=[];render();window.scrollTo(0,0)};
 }
