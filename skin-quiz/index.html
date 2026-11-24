@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skin Type Quiz · 피부타입 진단 퀴즈</title>
+<style>
+:root{
+  --bg1:#eef4fb; --bg2:#f7eef3; --ink:#2f3e56; --sub:#6b7a92;
+  --card:#ffffff; --line:#d9e3f0; --accent:#7ea6d6; --accent-ink:#ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",Roboto,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  background-attachment:fixed;
+  min-height:100dvh;
+  display:flex;flex-direction:column;align-items:center;
+  padding:max(14px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom));
+  overflow-wrap:anywhere;word-break:keep-all;
+}
+.top{width:100%;max-width:480px;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.brand{font-size:13px;color:var(--sub);letter-spacing:.04em}
+.lang{border:1px solid var(--line);background:rgba(255,255,255,.7);color:var(--ink);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer}
+main{width:100%;max-width:480px;flex:1;display:flex;flex-direction:column}
+.panel{background:var(--card);border-radius:24px;padding:28px 22px;box-shadow:0 10px 30px rgba(80,110,160,.12);flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px}
+h1{font-size:clamp(24px,7vw,32px);line-height:1.25}
+h2{font-size:clamp(19px,5.4vw,23px);line-height:1.4}
+p.lead{color:var(--sub);line-height:1.6;font-size:15px}
+.flake{font-size:34px}
+.btn{border:0;background:var(--accent);color:var(--accent-ink);border-radius:16px;padding:16px;font-size:16px;font-weight:600;cursor:pointer;width:100%}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress>i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.count{font-size:13px;color:var(--sub)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:16px;padding:15px 16px;font-size:15px;line-height:1.45;cursor:pointer}
+.opt:active,.opt:hover{border-color:var(--accent);background:#f3f8fe}
+.note{font-size:12px;color:var(--sub);text-align:center;margin-top:12px;line-height:1.5}
+
+/* result: 9:16 story card */
+.stage{display:flex;flex-direction:column;align-items:center;gap:12px}
+.story{
+  --w:min(calc(100vw - 32px),420px,calc((100dvh - 175px) * 9 / 16));
+  width:var(--w);aspect-ratio:9/16;
+  border-radius:22px;overflow:hidden;position:relative;
+  background:linear-gradient(170deg,var(--c1),var(--c2));
+  box-shadow:0 14px 40px rgba(60,90,140,.22);
+  display:flex;flex-direction:column;
+  padding:calc(var(--w)*.075);
+  container-type:inline-size;
+  color:#2b3a52;
+}
+.story .small{font-size:3.6cqw;letter-spacing:.08em;opacity:.75}
+.story .big-flake{font-size:14cqw;margin-top:8cqw}
+.story .type{font-size:13cqw;font-weight:800;line-height:1.1;margin-top:2cqw}
+.story .tag{font-size:4.6cqw;margin-top:3cqw;opacity:.85;line-height:1.4}
+.story ul{list-style:none;margin-top:9cqw;display:flex;flex-direction:column;gap:4cqw}
+.story li{background:rgba(255,255,255,.62);border-radius:4cqw;padding:4.4cqw 4.6cqw;font-size:4.7cqw;line-height:1.5}
+.story .foot{margin-top:auto;text-align:center;font-size:4.3cqw;line-height:1.5;font-weight:600}
+.story .disc{margin-top:2.5cqw;text-align:center;font-size:3.1cqw;opacity:.7}
+.hint{font-size:13px;color:var(--sub);text-align:center}
+.row{display:flex;gap:10px;width:var(--w,100%);max-width:420px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="top">
+  <span class="brand">❄ SKIN TYPE QUIZ</span>
+  <button class="lang" id="lang" type="button" aria-label="Change language">English</button>
+</div>
+<main id="app"></main>
+
+<script>
+const ACCOUNT = "@yourbeauty"; // ← 뷰티 계정 이름이 정해지면 여기 한 줄만 바꾸세요
+
+const T = {
+  ko:{
+    brand:"피부타입 진단",
+    title:"나는 어떤 피부타입일까?", lead:"6문제, 1분이면 끝나요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
+    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", hint:"화면을 캡처해서 스토리에 올려 보세요",
+    foot:`${ACCOUNT}\n곧 오픈 · 팔로우하고 루틴 더 보기`,
+    disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"의학적 진단이 아닙니다.", switchTo:"English",
+    types:{
+      dry:{name:"건성", tag:"촉촉함이 가장 필요한 타입", tips:["세안 후 1분 안에 보습제를 발라 수분을 가둬 주세요.","세안은 미온수로, 너무 자주 하지 않기.","겨울엔 크림을 한 겹 더, 실내 습도 40~60% 유지."]},
+      oily:{name:"지성", tag:"번들거림은 건강하다는 신호이기도 해요", tips:["가벼운 젤·로션 타입으로 수분은 꼭 채워 주세요.","하루 두 번 순한 세안, 과한 클렌징은 피하기.","유분이 많아도 보습을 건너뛰지 않기."]},
+      combo:{name:"복합성", tag:"부위마다 다르게 챙겨 주는 타입", tips:["T존은 가볍게, 건조한 볼은 보습을 한 겹 더.","부위별로 제품 양을 조절해 바르기.","계절에 따라 루틴을 바꿔 주세요."]},
+      sensitive:{name:"민감성", tag:"자극 없이 천천히, 단순하게", tips:["새 제품은 팔 안쪽에 먼저 테스트하고 하나씩만 추가하기.","향·알코올이 적은 순한 제품 위주로 단순한 루틴 만들기.","뜨거운 물과 문지르는 세안은 피하고, 선크림은 꼭 챙기기."]}
+    },
+    q:[
+      {t:"세안 후 30분, 아무것도 바르지 않은 얼굴은?",o:[["얼굴 전체가 당겨요","dry"],["붉어지거나 따끔해요","sensitive"],["이마·코만 번들거려요","combo"],["전체가 번들거려요","oily"]]},
+      {t:"오후 3시, 거울 속 내 얼굴은?",o:[["이마·코는 번들, 볼은 건조해요","combo"],["전체적으로 번들거려요","oily"],["각질이 일어나 보여요","dry"],["얼굴이 붉게 달아올라 있어요","sensitive"]]},
+      {t:"새 스킨케어 제품을 쓰면 보통?",o:[["빨리 흡수되고 더 달라고 해요","dry"],["금방 번들거려요","oily"],["따갑거나 붉어지기 쉬워요","sensitive"],["이마는 괜찮은데 볼이 당겨요","combo"]]},
+      {t:"내 모공은?",o:[["코·볼 주변만 눈에 띄어요","combo"],["거의 안 보여요","dry"],["전체적으로 넓은 편이에요","oily"],["모공보다 붉은기가 더 신경 쓰여요","sensitive"]]},
+      {t:"겨울 바람과 난방, 내 피부는?",o:[["붉어지고 따가워요","sensitive"],["각질이 일어나고 건조해요","dry"],["볼은 건조한데 T존은 그대로예요","combo"],["별 변화 없고 오히려 번들거려요","oily"]]},
+      {t:"선크림·베이스를 바르고 한낮이 되면?",o:[["T존만 무너져요","combo"],["가려움이나 화끈거림이 있어요","sensitive"],["들뜨고 갈라져요","dry"],["전체가 흘러내려요","oily"]]}
+    ]
+  },
+  en:{
+    brand:"Skin Type Quiz",
+    title:"What's your skin type?", lead:"6 questions, about a minute.\nShare your result card right to your story.",
+    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", hint:"Screenshot this card and post it to your story",
+    foot:`${ACCOUNT}\nOpening soon · Follow for more routines`,
+    disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Not a medical diagnosis.", switchTo:"한국어",
+    types:{
+      dry:{name:"Dry", tag:"Moisture is your best friend", tips:["Apply moisturizer within a minute of cleansing to lock in water.","Wash with lukewarm water and don't over-cleanse.","Add an extra layer of cream in winter; keep indoor humidity at 40–60%."]},
+      oily:{name:"Oily", tag:"A little shine is perfectly normal", tips:["Use light gel or lotion textures, but never skip hydration.","Cleanse gently twice a day; avoid harsh scrubbing.","Oily skin still needs moisturizer."]},
+      combo:{name:"Combination", tag:"Different zones, different care", tips:["Keep the T-zone light and give dry cheeks an extra layer.","Adjust the amount of product by area.","Tweak your routine with the seasons."]},
+      sensitive:{name:"Sensitive", tag:"Slow, simple, and gentle", tips:["Patch-test new products on your inner arm and add one at a time.","Keep a simple routine with fragrance-free, gentle formulas.","Avoid hot water and rubbing; never skip sunscreen."]}
+    },
+    q:[
+      {t:"30 minutes after washing, with nothing applied, your face feels…",o:[["Tight all over","dry"],["Red or stingy","sensitive"],["Shiny on forehead and nose only","combo"],["Shiny all over","oily"]]},
+      {t:"At 3 p.m., your face in the mirror looks…",o:[["Shiny T-zone, dry cheeks","combo"],["Shiny all over","oily"],["Flaky in places","dry"],["Flushed and warm","sensitive"]]},
+      {t:"When you try a new skincare product, usually…",o:[["It soaks in fast and I want more","dry"],["I get shiny quickly","oily"],["It stings or turns me red easily","sensitive"],["Forehead is fine but cheeks feel tight","combo"]]},
+      {t:"Your pores are…",o:[["Visible only around nose and cheeks","combo"],["Barely visible","dry"],["Large overall","oily"],["Redness bothers me more than pores","sensitive"]]},
+      {t:"Winter wind and heating make your skin…",o:[["Red and stingy","sensitive"],["Flaky and dry","dry"],["Dry cheeks, same T-zone","combo"],["No change, or even shinier","oily"]]},
+      {t:"By midday after sunscreen or base makeup…",o:[["Only the T-zone breaks down","combo"],["Itchy or burning","sensitive"],["Patchy and cracked","dry"],["Everything slides off","oily"]]}
+    ]
+  }
+};
+const PALETTE = {
+  dry:["#dcebfa","#f3e6f2"], oily:["#d9f0ef","#e8f2fb"],
+  combo:["#e4e6fa","#f6e9ef"], sensitive:["#fbe4ea","#e9eefb"]
+};
+
+let lang = (navigator.language||"").toLowerCase().startsWith("ko") ? "ko" : "en";
+let idx = -1, picks = [];
+const app = document.getElementById("app");
+const langBtn = document.getElementById("lang");
+
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+function nl(s){return esc(s).replace(/\n/g,"<br>")}
+
+function render(){
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  langBtn.textContent = t.switchTo;
+  document.title = lang==="ko" ? "피부타입 진단 퀴즈" : "Skin Type Quiz";
+  if(idx<0) return renderIntro(t);
+  if(idx>=t.q.length) return renderResult(t);
+  renderQ(t);
+}
+function renderIntro(t){
+  app.innerHTML = `<section class="panel">
+    <div class="flake">❄</div>
+    <h1>${esc(t.title)}</h1>
+    <p class="lead">${nl(t.lead)}</p>
+    <button class="btn" id="go" type="button">${esc(t.start)}</button>
+    <p class="note" style="margin-top:0">${esc(t.note)}</p>
+  </section>`;
+  document.getElementById("go").onclick=()=>{idx=0;picks=[];render()};
+}
+function renderQ(t){
+  const q=t.q[idx], total=t.q.length;
+  app.innerHTML = `<section class="panel">
+    <div><div class="count">${t.of(idx+1,total)}</div>
+    <div class="progress" style="margin-top:8px"><i style="width:${(idx/total)*100}%"></i></div></div>
+    <h2>${esc(q.t)}</h2>
+    <div class="opts">${q.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}">${esc(o[0])}</button>`).join("")}</div>
+    <p class="note" style="margin-top:0">${esc(t.note)}</p>
+  </section>`;
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    picks[idx]=T.ko.q[idx].o[+b.dataset.i][1]; // type key is identical across languages (same order)
+    idx++; render(); window.scrollTo(0,0);
+  });
+}
+function result(){
+  const score={dry:0,oily:0,combo:0,sensitive:0};
+  picks.forEach(k=>score[k]++);
+  const max=Math.max(...Object.values(score));
+  // tie → the most recently chosen among the tied types
+  for(let i=picks.length-1;i>=0;i--) if(score[picks[i]]===max) return picks[i];
+}
+function renderResult(t){
+  const k=result(), ty=t.types[k], [c1,c2]=PALETTE[k];
+  app.innerHTML = `<section class="stage">
+    <div class="story" style="--c1:${c1};--c2:${c2}" id="card">
+      <div class="small">${esc(t.small)}</div>
+      <div class="big-flake">❄</div>
+      <div class="type">${esc(ty.name)}</div>
+      <div class="tag">${esc(ty.tag)}</div>
+      <ul>${ty.tips.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+      <div class="foot">${nl(t.foot)}</div>
+      <div class="disc">${esc(t.disc)}</div>
+    </div>
+    <p class="hint">${esc(t.hint)}</p>
+    <div class="row"><button class="btn ghost" id="again" type="button">${esc(t.again)}</button></div>
+  </section>`;
+  document.getElementById("again").onclick=()=>{idx=-1;picks=[];render();window.scrollTo(0,0)};
+}
+langBtn.onclick=()=>{lang=lang==="ko"?"en":"ko";render()};
+render();
+</script>
+</body>
+</html>
