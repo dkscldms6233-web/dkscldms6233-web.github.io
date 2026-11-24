@@ -125,7 +125,7 @@ const T = {
   ko:{
     brand:"피부타입 진단",
     title:"나는 어떤 피부타입일까?", lead:"계절마다 피부는 달라져요.\n계절을 고르고 6문제로 확인해 보세요.\n결과는 스토리 카드로 바로 공유할 수 있어요.",
-    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", other:"다른 계절로", passBtn:"내 피부 여권", passTitle:"나의 1년 피부 여권", passDone:"1년 피부 지도 완성", passLeft:"아직 못 찍은 계절이 있어요", back:"돌아가기", reset:"여권 지우기", empty:"아직 비어 있어요", stamped:"여권에 도장 찍힘", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
+    start:"시작하기", of:(a,b)=>`${a} / ${b}`, again:"다시 하기", other:"다른 계절로", passBtn:"내 피부 계절 도감", passTitle:"나의 피부 계절 도감", passDone:"피부 계절 도감 완성", passSmall:"피부 계절 도감", passLeft:"아직 못 모은 계절이 있어요", back:"돌아가기", reset:"도감 지우기", empty:"아직 비어 있어요", stamped:"도감에 등록됨", seasonQ:"어느 계절의 피부를 알아볼까요?", hint:"화면을 캡처해서 스토리에 올려 보세요",
     foot:`${ACCOUNT}\n팔로우하고 더 많은 정보를 알아가세요`,
     disc:"의학적 진단이 아닙니다", small:"MY SKIN TYPE", note:"의학적 진단이 아닙니다.", switchTo:"English",
     types:{
@@ -146,7 +146,7 @@ const T = {
   en:{
     brand:"Skin Type Quiz",
     title:"What's your skin type?", lead:"Skin changes with the seasons.\nPick a season and answer 6 questions.\nShare your result card right to your story.",
-    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", other:"Other season", passBtn:"My skin passport", passTitle:"My 1-year skin passport", passDone:"Your 1-year skin map", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear passport", empty:"Still empty", stamped:"Stamped in passport", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
+    start:"Start", of:(a,b)=>`${a} / ${b}`, again:"Retake", other:"Other season", passBtn:"My skin collection", passTitle:"My Skin Season Collection", passDone:"Season Collection complete", passSmall:"SEASON COLLECTION", passLeft:"Some seasons are still empty", back:"Back", reset:"Clear collection", empty:"Still empty", stamped:"Added to collection", seasonQ:"Which season's skin are we checking?", hint:"Screenshot this card and post it to your story",
     foot:`${ACCOUNT}\nFollow to discover more skin tips`,
     disc:"Not a medical diagnosis", small:"MY SKIN TYPE", note:"Not a medical diagnosis.", switchTo:"한국어",
     types:{
@@ -307,7 +307,7 @@ function renderPass(t){
       :`<div class="prow empty"><div class="pface" style="background:transparent;border-style:dashed"></div><div class="ptx"><div class="pse">${S.sym} ${esc(lang==="ko"?S.ko:S.EN)}</div><div class="pty">${esc(t.empty)}</div></div></div>`}).join("");
   app.innerHTML=`<section class="stage">
     <div class="story" style="--c1:#e6eefb;--c2:#f7e9f0" id="card">
-      <div class="small">MY SKIN PASSPORT · ${n}/4</div>
+      <div class="small">${esc(t.passSmall)} · ${n}/4</div>
       <div class="ptitle">${esc(n===4?t.passDone:t.passTitle)}</div>
       <div class="psub">${esc(sub)}</div>
       <ul style="display:none"></ul>
