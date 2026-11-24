@@ -165,7 +165,7 @@ body[data-season=spring]{--accent:#e58fae}body[data-season=summer]{--accent:#4fa
 </defs></svg>
 <div class="top">
   <span class="brand">❄ SKIN TYPE QUIZ</span>
-  <button class="lang" id="lang" type="button" aria-label="Change language">English</button>
+  <div style="display:flex;gap:8px"><button class="lang" id="snd" type="button" aria-label="Sound on/off">🔊</button><button class="lang" id="lang" type="button" aria-label="Change language">English</button></div>
 </div>
 <main id="app"></main>
 
@@ -327,6 +327,30 @@ let lang = "ko"; // 처음 들어오면 항상 한국어로 시작 (오른쪽 �
 let idx = -1, picks = [];
 const app = document.getElementById("app");
 const langBtn = document.getElementById("lang");
+/* ---- 효과음: Web Audio로 직접 합성(음원 파일·저작권 없음). 오른쪽 위 🔊 버튼으로 끄고 켤 수 있음 ---- */
+let audioCtx=null, muted=false, sfxPending=false;
+try{muted=localStorage.getItem("skinMute")==="1"}catch(e){}
+function ac(){try{if(!audioCtx){const C=window.AudioContext||window.webkitAudioContext;if(C)audioCtx=new C()}if(audioCtx&&audioCtx.state==="suspended")audioCtx.resume();}catch(e){}return audioCtx}
+function tone(f,t0,d,type,vol,slideTo){const c=ac();if(!c||muted)return;try{const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+t0;o.type=type||"sine";o.frequency.setValueAtTime(f,t);if(slideTo)o.frequency.exponentialRampToValueAtTime(slideTo,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol||.1,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.05)}catch(e){}}
+function noise(t0,d,vol,hp){const c=ac();if(!c||muted)return;try{const n=Math.floor(c.sampleRate*d),b=c.createBuffer(1,n,c.sampleRate),a=b.getChannelData(0);for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*(1-i/n);const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain(),t=c.currentTime+t0;s.buffer=b;f.type="highpass";f.frequency.value=hp||3000;g.gain.value=vol||.08;s.connect(f);f.connect(g);g.connect(c.destination);s.start(t)}catch(e){}}
+const SFX={
+  tap:()=>tone(640,0,.09,"triangle",.1,900),
+  go:()=>{tone(520,0,.08,"sine",.09);tone(780,.07,.12,"sine",.09)},
+  season:()=>{tone(600,0,.1,"triangle",.1);tone(900,.07,.16,"triangle",.1)},
+  back:()=>tone(520,0,.1,"sine",.08,360),
+  copy:()=>{tone(880,0,.08,"square",.04);tone(1320,.08,.16,"square",.04)},
+  match:()=>{[523,659,784,1046].forEach((f,i)=>tone(f,i*.12,i===3?.45:.18,"sine",.1));tone(1568,.5,.3,"sine",.05)},
+  result:k=>{
+    const base={dry:523,oily:587,combo:659,sensitive:494}[k]||523;
+    [1,1.25,1.5,2,2.5].forEach((m,i)=>tone(base*m,i*.09,.4,"sine",.09));tone(base/2,0,.6,"triangle",.06);
+    if(k==="dry"||k==="combo"){for(let i=0;i<4;i++)noise(.05+i*.07,.05,.06,4500)}        // 바삭, 각질 소리
+    if(k==="oily"||k==="combo"){tone(380,.1,.35,"sine",.06,1300)}                          // 반질, 미끄러지는 소리
+    if(k==="sensitive"){tone(90,.05,.18,"sine",.2);tone(80,.26,.22,"sine",.2)}            // 두근두근
+  }
+};
+function paintSnd(){const b=document.getElementById("snd");if(b)b.textContent=muted?"🔇":"🔊"}
+paintSnd();
+document.getElementById("snd").onclick=()=>{muted=!muted;try{localStorage.setItem("skinMute",muted?"1":"0")}catch(e){}paintSnd();SFX.tap()};
 
 function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
 function nl(s){return esc(s).replace(/\n/g,"<br>")}
@@ -352,7 +376,7 @@ function renderIntro(t){
     <button class="btn" id="go" type="button">${esc(t.start)}</button>
     <p class="note" style="margin-top:0">${esc(t.note)}</p>
   </section>`;
-  document.getElementById("go").onclick=()=>{idx=-2;picks=[];render()};
+  document.getElementById("go").onclick=()=>{SFX.go();idx=-2;picks=[];render()};
 }
 function renderSeason(t){
   app.innerHTML = `<section class="panel">
@@ -362,9 +386,9 @@ function renderSeason(t){
     <button class="minilink" id="bs" type="button">${esc(t.toStart)}</button>
     <p class="note" style="margin-top:0">${esc(t.note)}</p>
   </section>`;
-  document.getElementById("bs").onclick=()=>{idx=-1;render();window.scrollTo(0,0)};
-  const pp=document.getElementById("pp");if(pp)pp.onclick=()=>{idx=-3;render();window.scrollTo(0,0)};
-  app.querySelectorAll(".sbtn").forEach(b=>b.onclick=()=>{season=b.dataset.s;document.body.dataset.season=season;idx=0;picks=[];render();window.scrollTo(0,0)});
+  document.getElementById("bs").onclick=()=>{SFX.back();idx=-1;render();window.scrollTo(0,0)};
+  const pp=document.getElementById("pp");if(pp)pp.onclick=()=>{SFX.go();idx=-3;render();window.scrollTo(0,0)};
+  app.querySelectorAll(".sbtn").forEach(b=>b.onclick=()=>{SFX.season();season=b.dataset.s;document.body.dataset.season=season;idx=0;picks=[];render();window.scrollTo(0,0)});
 }
 function renderQ(t){
   const q=t.q[idx], total=t.q.length;
@@ -375,10 +399,10 @@ function renderQ(t){
     <div class="opts">${q.o.map((o,i)=>`<button class="opt${picks[idx]===o[1]?" sel":""}" type="button" data-i="${i}"><span class="sw">${skin(o[1],true)}</span><span class="tx">${esc(o[0])}</span></button>`).join("")}</div>
     <p class="note" style="margin-top:0">${esc(t.note)}</p>
   </section>`;
-  document.getElementById("bk").onclick=()=>{idx=idx>0?idx-1:-2;render();window.scrollTo(0,0)};
+  document.getElementById("bk").onclick=()=>{SFX.back();idx=idx>0?idx-1:-2;render();window.scrollTo(0,0)};
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     picks[idx]=T.ko.q[idx].o[+b.dataset.i][1]; // type key is identical across languages (same order)
-    idx++; render(); window.scrollTo(0,0);
+    idx++; if(idx>=T[lang].q.length)sfxPending=true; else SFX.tap(); render(); window.scrollTo(0,0);
   });
 }
 function result(){
@@ -392,7 +416,7 @@ function shareMe(k,nick){
   const t=T[lang], url=location.origin+location.pathname+`?t=${k}&s=${season}`;
   const text=t.shareText(nick);
   const toast=document.getElementById("toast");
-  const done=()=>{if(toast){toast.textContent=t.copied;toast.classList.remove("hidden");setTimeout(()=>toast.classList.add("hidden"),2600)}};
+  const done=()=>{SFX.copy();if(toast){toast.textContent=t.copied;toast.classList.remove("hidden");setTimeout(()=>toast.classList.add("hidden"),2600)}};
   if(navigator.share){navigator.share({title:document.title,text,url}).catch(()=>{});return}
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text+" "+url).then(done,()=>{window.prompt("Copy",text+" "+url)});return}
   window.prompt("Copy",text+" "+url);
@@ -424,7 +448,7 @@ function renderMatch(t){
     <div class="toast hidden" id="toast"></div>
   </section>`;
   document.getElementById("share").onclick=()=>shareMe(k,NICK[lang][season][k]);
-  document.getElementById("bk").onclick=()=>{idx=6;render();window.scrollTo(0,0)};
+  document.getElementById("bk").onclick=()=>{SFX.back();idx=6;render();window.scrollTo(0,0)};
 }
 function renderPass(t){
   const P=getPass(), n=passCount();
@@ -448,11 +472,11 @@ function renderPass(t){
     <button class="btn wide" id="bk" type="button">${esc(t.back)}</button>
     <button class="minilink" id="rs" type="button">${esc(t.reset)}</button>
   </section>`;
-  document.getElementById("bk").onclick=()=>{idx=-2;render();window.scrollTo(0,0)};
+  document.getElementById("bk").onclick=()=>{SFX.back();idx=-2;render();window.scrollTo(0,0)};
   document.getElementById("rs").onclick=()=>{setPass({});render()};
 }
 function renderResult(t){
-  const k=result(); if(picks.length===6){const P=getPass();P[season]={type:k};setPass(P)} const ty=t.types[k], S=SEASONS[season], [c1,c2]=S.c, tips=[ty.tips[0],...ST[lang][season][k]];
+  const k=result(); if(sfxPending){sfxPending=false;SFX.result(k)} if(picks.length===6){const P=getPass();P[season]={type:k};setPass(P)} const ty=t.types[k], S=SEASONS[season], [c1,c2]=S.c, tips=[ty.tips[0],...ST[lang][season][k]];
   app.innerHTML = `<section class="stage">
     <div class="story" style="--c1:${c1};--c2:${c2};--sym:'${S.sym}'" id="card">
       <div class="small">${esc(t.small)} · ${esc(lang==='ko'?S.ko:S.EN)}</div>
@@ -473,10 +497,10 @@ function renderResult(t){
     <div class="row"><button class="btn ghost" id="again" type="button">${esc(t.again)}</button><button class="btn ghost" id="other" type="button">${esc(t.other)}</button></div>
   </section>`;
   document.getElementById("share").onclick=()=>shareMe(k,NICK[lang][season][k]);
-  const cmp=document.getElementById("cmp");if(cmp)cmp.onclick=()=>{idx=-4;render();window.scrollTo(0,0)};
-  document.getElementById("pass").onclick=()=>{idx=-3;render();window.scrollTo(0,0)};
-  document.getElementById("again").onclick=()=>{idx=0;picks=[];render();window.scrollTo(0,0)};
-  document.getElementById("other").onclick=()=>{idx=-2;picks=[];render();window.scrollTo(0,0)};
+  const cmp=document.getElementById("cmp");if(cmp)cmp.onclick=()=>{SFX.match();idx=-4;render();window.scrollTo(0,0)};
+  document.getElementById("pass").onclick=()=>{SFX.go();idx=-3;render();window.scrollTo(0,0)};
+  document.getElementById("again").onclick=()=>{SFX.go();idx=0;picks=[];render();window.scrollTo(0,0)};
+  document.getElementById("other").onclick=()=>{SFX.go();idx=-2;picks=[];render();window.scrollTo(0,0)};
 }
 langBtn.onclick=()=>{lang=lang==="ko"?"en":"ko";render()};
 render();
