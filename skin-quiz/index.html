@@ -152,6 +152,7 @@ body[data-season=spring]{--accent:#e58fae}body[data-season=summer]{--accent:#4fa
 .story .mface .fk{animation:drift 2.4s ease-in-out infinite alternate}.story .mface .sh{animation:glint 1.9s ease-in-out infinite alternate}.story .mface .bl{animation:beat 2.2s ease-in-out infinite}
 .rec .br{display:block;font-size:11.5px;letter-spacing:.05em;color:#c0566f;font-weight:700;text-transform:uppercase;margin-bottom:1px}
 .story .mp span{min-width:0}.story .mp small{display:block;font-size:3.1cqw;letter-spacing:.05em;color:#c0566f;font-weight:700;text-transform:uppercase}
+.rec .en{display:block;font-size:11.5px;color:#9aa6b8;margin-top:1px}
 </style>
 </head>
 <body>
@@ -278,6 +279,9 @@ const MATCH={
 /* 브랜드 이름 (영문 표기, 한글 표기) — 제품 이름이 이 영문 브랜드로 시작하면 브랜드/제품명으로 나눠 보여 줍니다 */
 const BR=[["Beauty of Joseon","조선미녀"],["AESTURA","에스트라"],["LANEIGE","라네즈"],["Isntree","이즈앤트리"],["ETUDE","에뛰드"],["Anua","아누아"]];
 function splitName(full){const b=BR.find(([e])=>full.startsWith(e));return b?{brand:b[0],ko:b[1],prod:full.slice(b[0].length).trim()}:{brand:"",ko:"",prod:full}}
+/* 한국어 화면용 제품 한글 이름. 확인됨: 아토베리어365 크림(한국어 리뷰 페이지). 나머지는 한국어 공식 페이지를 못 찾아 읽기 쉬운 표기로 적은 것 → 영문 정식명을 작게 같이 보여 줌. 공식 이름을 알면 여기만 고치세요 */
+const PRODKO={"ATOBARRIER365 Cream":"아토베리어365 크림","Water Bank Blue Hyaluronic Cream":"워터뱅크 블루 히알루로닉 크림","Red Bean Water Gel":"붉은팥 수분 워터젤","Hyaluronic Acid Aqua Gel Cream":"히알루론산 아쿠아 젤 크림","SoonJung 2x Barrier Intensive Cream":"순정 2X 배리어 인텐시브 크림","Heartleaf 70 Soothing Cream":"어성초 70 수딩 크림"};
+const prodName=n=>lang==="ko"&&PRODKO[n.prod]?PRODKO[n.prod]:n.prod;
 const brandLine=b=>b.brand?(lang==="ko"?`${b.brand} · ${b.ko}`:`${b.brand} · K-beauty`):"";
 const ORDER=["dry","oily","combo","sensitive"];
 function matchOf(a,b){const [x,y]=[a,b].sort((m,n)=>ORDER.indexOf(m)-ORDER.indexOf(n));return MATCH[x+"-"+y]}
@@ -426,7 +430,7 @@ function renderMatch(t){
   const [pct,ko,en]=matchOf(k,F.type);
   const my=PRODUCTS[k][0], fr=PRODUCTS[F.type][k===F.type?1:0];
   const nick=(sea,ty)=>NICK[lang][sea][ty]+(lang==="ko"?" 타입":" Type");
-  const prod=x=>{const n=splitName(x[0]);return `<div class="mp"><i class="pic">${pIcon(x[3],x[4])}</i><span><small>${esc(brandLine(n))}</small>${esc(n.prod)}</span></div>`};
+  const prod=x=>{const n=splitName(x[0]);return `<div class="mp"><i class="pic">${pIcon(x[3],x[4])}</i><span><small>${esc(brandLine(n))}</small>${esc(prodName(n))}</span></div>`};
   app.innerHTML=`<section class="stage">
     <div class="story" style="--c1:#fde4ec;--c2:#dcebfa" id="card">
       <div class="small">${esc(t.matchSmall)}</div>
@@ -489,7 +493,7 @@ function renderResult(t){
       <div class="disc">${esc(t.disc)}</div>
     </div>
     <p class="hint">${esc(t.hint)} · ${esc(t.stamped)} ${passCount()}/4</p>
-    ${PRODUCTS[k]?`<div class="rec"><h3>${esc(t.recTitle(ty.name))}</h3><ul>${PRODUCTS[k].map(x=>`<li><i class="pic">${pIcon(x[3],x[4])}</i><div>${(()=>{const n=splitName(x[0]);return `<small class="br">${esc(brandLine(n))}</small><b>${esc(n.prod)}</b>`})()}<span>${esc(lang==="ko"?x[1]:x[2])}</span><em>💗 ${esc(t.matchLabel)}: ${esc(lang==="ko"?x[5]:x[6])}</em></div></li>`).join("")}</ul><p>${esc(t.recNote)} ${esc(t.illus)}</p></div>`:""}
+    ${PRODUCTS[k]?`<div class="rec"><h3>${esc(t.recTitle(ty.name))}</h3><ul>${PRODUCTS[k].map(x=>`<li><i class="pic">${pIcon(x[3],x[4])}</i><div>${(()=>{const n=splitName(x[0]);return `<small class="br">${esc(brandLine(n))}</small><b>${esc(prodName(n))}</b>${lang==="ko"&&PRODKO[n.prod]?`<small class="en">${esc(n.prod)}</small>`:""}`})()}<span>${esc(lang==="ko"?x[1]:x[2])}</span><em>💗 ${esc(t.matchLabel)}: ${esc(lang==="ko"?x[5]:x[6])}</em></div></li>`).join("")}</ul><p>${esc(t.recNote)} ${esc(t.illus)}</p></div>`:""}
     <button class="btn wide" id="share" type="button">${esc(t.shareBtn)}</button>
     ${friend?`<button class="btn wide" id="cmp" type="button">${esc(t.compBtn)}</button>`:""}
     <div class="toast hidden" id="toast"></div>
